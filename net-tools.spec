@@ -2,7 +2,7 @@ Summary:	Basic Networking Tools
 Summary(pl):	Podstawowe narzêdzia do obs³ugi i konfiguracji sieci
 Name:		net-tools
 Version:	1.60
-Release:	4
+Release:	5
 License:	GPL
 Group:		Networking/Admin
 Group(de):	Netzwerkwesen/Administration
@@ -117,8 +117,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/rarp
 %attr(755,root,root) %{_sbindir}/route
 
-%lang(da) %{_mandir}/da/man[15]/*
-# No da man8
 %lang(de) %{_mandir}/de/man[15]/*
 %lang(de) %{_mandir}/de/man8/[^ps]*
 %lang(es) %{_mandir}/es/man[15]/*
