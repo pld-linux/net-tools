@@ -42,9 +42,9 @@ terminal ("serial") line into one of several "network" modes, thus
 allowing you to use it for point-to-point links to other computers.
 
 %description -n slattach -l pl
-Slattach jest prostym programem, który umo¿liwia zamianê zwyk³ej
-lini terminala ("szeregowej") w jednen z kilku trybów "sieciowych"
-przez co umo¿liwia na po³±czenia point-to-point z innym komputerem.
+Slattach jest prostym programem, który umo¿liwia zamianê zwyk³ej lini
+terminala ("szeregowej") w jednen z kilku trybów "sieciowych" przez co
+umo¿liwia na po³±czenia point-to-point z innym komputerem.
 
 %package -n plipconfig
 Summary:	plipconfig - fine tune PLIP device parameters
@@ -66,9 +66,9 @@ options.
 
 %description -n plipconfig -l pl
 Plipconfig jest u¿ywany do poprawienia wydajno¶ci PLIP poprzez zmianê
-domy¶lnych czasowych parametrów u¿ywanych w protokole PLIP.
-Rezultaty zale¿± od hardware portu równoleg³ego, kabla, szybko¶ci CPU
-ka¿dej maszyny po³±czonej poprzez PLIP.
+domy¶lnych czasowych parametrów u¿ywanych w protokole PLIP. Rezultaty
+zale¿± od hardware portu równoleg³ego, kabla, szybko¶ci CPU ka¿dej
+maszyny po³±czonej poprzez PLIP.
 
 %prep
 %setup  -q 
@@ -77,7 +77,7 @@ ka¿dej maszyny po³±czonej poprzez PLIP.
 %patch2 -p1
 
 %build
-%{__make} COPTS="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS} -Wall" I18N=1
+%{__make} COPTS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O0 -g} -Wall" I18N=1
 
 %install
 rm -rf $RPM_BUILD_ROOT
