@@ -1,5 +1,10 @@
 Summary:	Basic Networking Tools
+Summary(es):	Herramientas bАsicas de Red
+Summary(ja):	╔м╔ц╔х╔О║╪╔╞╓Р╔╩╔ц╔х╔╒╔ц╔в╓╧╓К╓©╓А╓н╢Пкэе╙╓й╔д║╪╔К
 Summary(pl):	Podstawowe narzЙdzia do obsЁugi i konfiguracji sieci
+Summary(pt_BR):	Ferramentas bАsicas de Rede
+Summary(ru):	Базовые сетевые программы
+Summary(uk):	Базов╕ програми мереж╕
 Name:		net-tools
 Version:	1.60
 Release:	6
@@ -24,10 +29,42 @@ This is a collection of the basic tools necessary for setting up
 networking on a Linux machine. It includes ifconfig, route, netstat,
 rarp, and some other minor tools.
 
+%description -l es
+Esta es una colecciСn de herramientas bАsicas necesarias para la
+configuraciСn de la red en una mАquina Linux. Incluye ifconfig, route,
+netstat, rarp, y algunas otras herramientas menores.
+
 %description -l pl
 Pakiet ten zawiera zbiСr podstawowych narzЙdzi do konfigurowania
 sieci. Znajduj╠ siЙ tutaj: ifconfig, route, netstat, rarp oraz inne -
 mniej wa©ne aplikacje.
+
+%description -l ja
+net-tools ╔я╔ц╔╠║╪╔╦╓о╔м╔ц╔х╔О║╪╔╞╓Р╔╩╔ц╔х╔╒╔ц╔в╓╧╓К╢Пкэе╙╓й╔д║╪╔К╓Р
+╢ч╓С╓г╓╓╓ч╓╧: arp║╒rarp║╒ifconfig║╒netstat║╒ethers ╓╫╓╥╓ф route ╓г╓╧║ё
+
+%description -l pt_BR
+Essa И uma coleГЦo de ferramentas bАsicas necessАrias para a
+configuraГЦo da rede em uma mАquina Linux. Inclui ifconfig, route,
+netstat, rarp, e algumas outras ferramentas menores.
+
+%description -l ru
+Это набор базовых программ, необходимых для установки и настройки
+сети. Он включает ifconfig, netstat, route и другие программы.
+
+Программы ifconfig и route для ядер 2.4.x являются устаревшими, т.к.
+не позволяют управлять всеми возможностями, предоставляемыми этими
+ядрами. Взамен их для конфигурации системы рекомендуется пользоваться
+программой ip из пакета iproute2.
+
+%description -l uk
+Це наб╕р базових програм, необх╕дних для конф╕гурування мереж╕. В╕н
+включа╓ ifconfig, netstat, route та ╕нш╕ програми.
+
+Програми ifconfig та route для ядер 2.4.x ╓ застар╕лими, тому що не
+дозволяють керувати вс╕ма можливостями, як╕ надають ц╕ ядра. Зам╕сть
+них для конф╕гурування мереж╕ рекоменду╓ться користуватись програмою
+ip з пакету iproute2.
 
 %package -n slattach
 Summary:	slattach - attach a network interface to a serial line
