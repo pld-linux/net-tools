@@ -1,6 +1,6 @@
-diff -urN net-tools-1.52.old/config.h net-tools-1.52/config.h
---- net-tools-1.52.old/config.h	Thu Jan  1 01:00:00 1970
-+++ net-tools-1.52/config.h	Fri Apr 23 10:49:40 1999
+diff -ruN net-tools-1.52/config.h net-tools-1.52.new/config.h
+--- net-tools-1.52/config.h	Thu Jan  1 01:00:00 1970
++++ net-tools-1.52.new/config.h	Fri Apr 23 11:11:02 1999
 @@ -0,0 +1,68 @@
 +/*
 +* config.h	Automatically generated configuration includefile
@@ -39,7 +39,7 @@ diff -urN net-tools-1.52.old/config.h net-tools-1.52/config.h
 +#define HAVE_AFNETROM 1
 +#define HAVE_AFROSE 1
 +#define HAVE_AFECONET 1
-+#define HAVE_AFDECnet 1
++#define HAVE_AFDECnet 0
 +
 +/* 
 + * 
@@ -70,21 +70,9 @@ diff -urN net-tools-1.52.old/config.h net-tools-1.52/config.h
 + */
 +#define HAVE_FW_MASQUERADE 1
 +#define HAVE_IP_TOOLS 1
-diff -urN net-tools-1.52.old/config.make net-tools-1.52/config.make
---- net-tools-1.52.old/config.make	Wed Apr 21 19:48:58 1999
-+++ net-tools-1.52/config.make	Fri Apr 23 10:49:40 1999
-@@ -8,7 +8,7 @@
- HAVE_AFNETROM=1
- HAVE_AFROSE=1
- HAVE_AFECONET=1
--# HAVE_AFDECnet=0
-+HAVE_AFDECnet=1
- HAVE_HWETHER=1
- HAVE_HWARC=1
- HAVE_HWSLIP=1
-diff -urN net-tools-1.52.old/config.status net-tools-1.52/config.status
---- net-tools-1.52.old/config.status	Thu Jan  1 01:00:00 1970
-+++ net-tools-1.52/config.status	Fri Apr 23 10:49:40 1999
+diff -ruN net-tools-1.52/config.status net-tools-1.52.new/config.status
+--- net-tools-1.52/config.status	Thu Jan  1 01:00:00 1970
++++ net-tools-1.52.new/config.status	Fri Apr 23 11:11:02 1999
 @@ -0,0 +1,85 @@
 +#
 +# config.in	Configure.sh source for the net-tools.
@@ -144,7 +132,7 @@ diff -urN net-tools-1.52.old/config.status net-tools-1.52/config.status
 +bool 'NET/ROM (packet radio) protocol family' HAVE_AFNETROM y
 +bool 'Rose (packet radio) protocol family' HAVE_AFROSE y
 +bool 'Econet protocol family' HAVE_AFECONET y
-+bool 'DECnet protocol family' HAVE_AFDECnet y
++bool 'DECnet protocol family' HAVE_AFDECnet n
 +*
 +*
 +*            Device Hardware types.
