@@ -70,7 +70,7 @@ options.
 %patch5 -p1
 
 %build
-%{__make} COPTS="%{?debug:-O -g}%{!?debug:$RPM_OPT_FLAGS} -Wall" I18N=1
+%{__make} COPTS="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS} -Wall" I18N=1
 
 %install
 rm -rf $RPM_BUILD_ROOT
