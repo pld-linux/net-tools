@@ -80,7 +80,6 @@ maszyny po³±czonej poprzez PLIP.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_mandir}/pl/man8
 
 %{__make} install \
 	BASEDIR=$RPM_BUILD_ROOT \
