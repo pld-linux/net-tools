@@ -51,19 +51,17 @@ install %{SOURCE1} %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man8
 
 gzip -9nf $RPM_BUILD_ROOT%{_mandir}/{man1/*,man5/*,man8/*} READ*
 
+%find_lang net-tools
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files
+%files -f net-tools.lang
 %defattr(644,root,root,755)
 %doc READ*.gz
 
 %attr(755,root,root) /sbin/*
 %attr(755,root,root) /bin/*
-
-%lang(pt_BR) %{_datadir}/locale/pt_BR/LC_MESSAGES/*
-%lang(fr)    %{_datadir}/locale/fr/LC_MESSAGES/*
-%lang(de)    %{_datadir}/locale/de/LC_MESSAGES/*
 
 %lang(de_DE) %{_mandir}/de_DE/man*/*
 %lang(fr_FR) %{_mandir}/fr_FR/man*/*
