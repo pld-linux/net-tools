@@ -2,16 +2,17 @@ Summary:	Basic Networking Tools
 Summary(pl):	Podstawowe narzêdzia do obs³ugi i konfiguracji sieci
 Name:		net-tools
 Version:	1.57
-Release:	1
+Release:	2
 License:	GPL
 Group:		Networking/Admin
-Group(pl):	Sieciowe/Administracyjne
+Group(de):	Netzwerkwesen/Administration
+Group(pl):	Sieciowe/Administacyjne
 Source0:	http://www.tazenda.demon.co.uk/phil/net-tools/%{name}-%{version}.tar.bz2
 Source1:	ifconfig.8.pl
 Source2:	netstat.8.pl
-Patch0:		net-tools-config.patch
-Patch1:		net-tools-man.patch
-Patch2:		net-tools-mandir.patch
+Patch0:		%{name}-config.patch
+Patch1:		%{name}-man.patch
+Patch2:		%{name}-mandir.patch
 URL:		http://www.tazenda.demon.co.uk/phil/net-tools/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	slattach
@@ -29,7 +30,8 @@ mniej wa¿ne aplikacje.
 %package -n slattach
 Summary:	slattach - attach a network interface to a serial line
 Group:		Networking/Admin
-Group(pl):	Sieciowe/Administracyjne
+Group(de):	Netzwerkwesen/Administration
+Group(pl):	Sieciowe/Administacyjne
 Requires:	%{name} = %{version}
 
 %description -n slattach
@@ -40,18 +42,19 @@ allowing you to use it for point-to-point links to other computers.
 %package -n plipconfig
 Summary:	plipconfig - fine tune PLIP device parameters
 Group:		Networking/Admin
-Group(pl):	Sieciowe/Administracyjne
+Group(de):	Netzwerkwesen/Administration
+Group(pl):	Sieciowe/Administacyjne
 Requires:	%{name} = %{version}
 
 %description -n plipconfig
-Plipconfig is used to (hopefully) improve PLIP performance by
-changing the default timing parameters used by the PLIP protocol.
-Results are dependent on the parallel port hardware, cable, and
-the CPU speed of each machine on each end of the PLIP link.
+Plipconfig is used to (hopefully) improve PLIP performance by changing
+the default timing parameters used by the PLIP protocol. Results are
+dependent on the parallel port hardware, cable, and the CPU speed of
+each machine on each end of the PLIP link.
 
-If the single interface argument is given, plipconfig displays
-the status of the given interface only. Otherwise, it will try
-to set the options.
+If the single interface argument is given, plipconfig displays the
+status of the given interface only. Otherwise, it will try to set the
+options.
 
 %prep
 %setup  -q 
@@ -60,7 +63,7 @@ to set the options.
 %patch2 -p1
 
 %build
-%{__make} COPTS="$RPM_OPT_FLAGS -Wall" I18N=1
+%{__make} COPTS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g} -Wall" I18N=1
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -71,14 +74,11 @@ rm -rf $RPM_BUILD_ROOT
 	mandir=%{_mandir} \
 	I18N=1
 
-strip $RPM_BUILD_ROOT/{bin/*,sbin/*}
-
 install -d $RPM_BUILD_ROOT%{_mandir}/pl/man8
 install %{SOURCE1} $RPM_BUILD_ROOT%{_mandir}/pl/man8/ifconfig.8
 install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man8/netstat.8
 
-gzip -9nf $RPM_BUILD_ROOT%{_mandir}/{man{1,5,8}/*,*/man*/*} \
-	READ*
+gzip -9nf READ*
 
 %find_lang %{name}
 
