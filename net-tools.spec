@@ -13,7 +13,7 @@ Patch0:		net-tools-config.patch
 Patch1:		net-tools-man.patch
 Patch2:		net-tools-mandir.patch
 URL:		http://www.tazenda.demon.co.uk/phil/net-tools/
-Buildroot:	/tmp/%{name}-%{version}-root-%(id -u -n)
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	slattach
 
 %description
