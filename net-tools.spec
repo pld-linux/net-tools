@@ -155,30 +155,30 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/nameif
 
 %lang(de) %{_mandir}/de/man[15]/*
-%lang(de) %{_mandir}/de/man8/[^ps]*
+%lang(de) %{_mandir}/de/man8/[!ps]*
 %lang(es) %{_mandir}/es/man[15]/*
-%lang(es) %{_mandir}/es/man8/[^ps]*
+%lang(es) %{_mandir}/es/man8/[!ps]*
 %lang(fi) %{_mandir}/fi/man[15]/*
 # No fi man8
 %lang(fr) %{_mandir}/fr/man[15]/*
-%lang(fr) %{_mandir}/fr/man8/[^ps]*
+%lang(fr) %{_mandir}/fr/man8/[!ps]*
 %lang(hu) %{_mandir}/hu/man[15]/*
-%lang(hu) %{_mandir}/hu/man8/[^ps]*
+%lang(hu) %{_mandir}/hu/man8/[!ps]*
 %lang(id) %{_mandir}/id/man[15]/*
-%lang(id) %{_mandir}/id/man8/[^ps]*
+%lang(id) %{_mandir}/id/man8/[!ps]*
 %lang(it) %{_mandir}/it/man[15]/*
-%lang(it) %{_mandir}/it/man8/[^ps]*
+%lang(it) %{_mandir}/it/man8/[!ps]*
 %lang(ja) %{_mandir}/ja/man[15]/*
-%lang(ja) %{_mandir}/ja/man8/[^ps]*
+%lang(ja) %{_mandir}/ja/man8/[!ps]*
 # No nl man[15]
-%lang(nl) %{_mandir}/nl/man8/[^ps]*
+%lang(nl) %{_mandir}/nl/man8/[!ps]*
 %lang(pt) %{_mandir}/pt/man[15]/*
-%lang(pt) %{_mandir}/pt/man8/[^ps]*
+%lang(pt) %{_mandir}/pt/man8/[!ps]*
 %lang(pl) %{_mandir}/pl/man[15]/*
-%lang(pl) %{_mandir}/pl/man8/[^ps]*
+%lang(pl) %{_mandir}/pl/man8/[!ps]*
 
 %{_mandir}/man[15]/*
-%{_mandir}/man8/[^ps]*
+%{_mandir}/man8/[!ps]*
 
 %files -n slattach
 %defattr(644,root,root,755)
