@@ -60,12 +60,12 @@ to set the options.
 %patch2 -p1
 
 %build
-make COPTS="$RPM_OPT_FLAGS -Wall" I18N=1
+%{__make} COPTS="$RPM_OPT_FLAGS -Wall" I18N=1
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-make install \
+%{__make} install \
 	BASEDIR=$RPM_BUILD_ROOT \
 	INSTALL="%{_bindir}/install" \
 	mandir=%{_mandir} \
