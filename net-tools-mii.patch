@@ -1,0 +1,11 @@
+--- net-tools-1.60/include/mii.h.orig	2000-05-21 16:21:27.000000000 +0200
++++ net-tools-1.60/include/mii.h	2004-03-08 11:45:47.073676856 +0100
+@@ -9,6 +9,8 @@
+ #ifndef _LINUX_MII_H
+ #define _LINUX_MII_H
+ 
++#include <linux/sockios.h>
++
+ /* network interface ioctl's for MII commands */
+ #ifndef SIOCGMIIPHY
+ #define SIOCGMIIPHY (SIOCDEVPRIVATE)	/* Read from current PHY */
