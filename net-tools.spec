@@ -111,7 +111,7 @@ maszyny po³±czonej poprzez PLIP.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p0
+%patch3 -p1
 
 %build
 mv po/et_EE.po po/et.po
