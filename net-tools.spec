@@ -1,8 +1,8 @@
 Summary:	Basic Networking Tools
 Summary(pl):	Podstawowe narzêdzia do obs³ugi i konfiguracji sieci
 Name:		net-tools
-Version:	1.52
-Release:	3
+Version:	1.53
+Release:	1
 Copyright:	GPL
 Group:		Networking/Admin
 Group(pl):	Sieciowe/Administracja
@@ -11,8 +11,7 @@ Source1:	ifconfig.8.pl
 Source2:	netstat.8.pl
 Patch0:		net-tools-config.patch
 Patch1:		net-tools-man.patch
-Patch2:		net-tools-compile.patch
-Patch3:		net-tools-mandir.patch
+Patch2:		net-tools-mandir.patch
 URL:		http://www.tazenda.demon.co.uk/phil/net-tools/
 Buildroot:	/tmp/%{name}-%{version}-root
 Obsoletes:	slattach
@@ -32,10 +31,9 @@ aplikacje.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
-make COPTS="$RPM_OPT_FLAGS -Wall" 
+make COPTS="$RPM_OPT_FLAGS -Wall" I18N=1
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -43,7 +41,8 @@ rm -rf $RPM_BUILD_ROOT
 make install \
 	BASEDIR=$RPM_BUILD_ROOT \
 	INSTALL="/usr/bin/install" \
-	mandir=%{_mandir}
+	mandir=%{_mandir} \
+	I18N=1
 
 strip $RPM_BUILD_ROOT/{bin/*,sbin/*}
 
