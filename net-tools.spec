@@ -2,7 +2,7 @@ Summary:	Basic Networking Tools
 Summary(pl):	Podstawowe narzêdzia do obs³ugi i konfiguracji sieci
 Name:		net-tools
 Version:	1.53
-Release:	1
+Release:	2
 Copyright:	GPL
 Group:		Networking/Admin
 Group(pl):	Sieciowe/Administracja
@@ -47,9 +47,11 @@ make install \
 strip $RPM_BUILD_ROOT/{bin/*,sbin/*}
 
 install -d $RPM_BUILD_ROOT%{_mandir}/pl/man8
-install %{SOURCE1} %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man8
+install %{SOURCE1} $RPM_BUILD_ROOT%{_mandir}/pl/man8/ifconfig.8
+install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man8/netstat.8
 
-gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man{1,5,8}/* READ*
+gzip -9nf $RPM_BUILD_ROOT%{_mandir}/{man{1,5,8}/*,*/man*/*} \
+	READ*
 
 %find_lang %{name}
 
