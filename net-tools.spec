@@ -86,7 +86,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	BASEDIR=$RPM_BUILD_ROOT \
-	INSTALL="%{_bindir}/install" \
+	INSTALL="install" \
 	mandir=%{_mandir} \
 	I18N=1
 
