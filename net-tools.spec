@@ -2,7 +2,7 @@ Summary:	Basic Networking Tools
 Summary(pl):	Podstawowe narzêdzia do obs³ugi i konfiguracji sieci
 Name:		net-tools
 Version:	1.52
-Release:	1
+Release:	3
 Copyright:	GPL
 Group:		Networking/Admin
 Group(pl):	Sieciowe/Administracyjne
@@ -11,6 +11,7 @@ Source1:	ifconfig.8.pl
 Source2:	netstat.8.pl
 Patch0:		net-tools-config.patch
 Patch1:		net-tools-man.patch
+Patch2:		net-tools-compile.patch
 URL:		http://www.tazenda.demon.co.uk/phil/net-tools/
 Buildroot:	/tmp/%{name}-%{version}-root
 Obsoletes:	slattach
@@ -29,6 +30,7 @@ aplikacje.
 %setup  -q 
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 make COPTS="$RPM_OPT_FLAGS -Wall" 
@@ -36,12 +38,15 @@ make COPTS="$RPM_OPT_FLAGS -Wall"
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT%{_mandir}/pl/man8
-
-make BASEDIR=$RPM_BUILD_ROOT install
+make \
+    BASEDIR=$RPM_BUILD_ROOT \
+    INSTALL="/bin/install" install
 
 strip $RPM_BUILD_ROOT/{bin/*,sbin/*}
 
+mv $RPM_BUILD_ROOT%{_prefix}/man $RPM_BUILD_ROOT%{_datadir}
+
+install -d $RPM_BUILD_ROOT%{_mandir}/pl/man8
 install %{SOURCE1} %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man8
 
 gzip -9nf $RPM_BUILD_ROOT%{_mandir}/{man1/*,man5/*,man8/*} READ*
@@ -68,6 +73,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man*/*
 
 %changelog
+* Sun May 23 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
+  [1.52-3]
+- fixes fo compiling,
+- minor changes.
+
 * Fri Apr 23 1999 Artur Frysiak <wiget@pld.org.pl>
   [1.52-1]
 - compiled on rpm 3
@@ -88,7 +98,9 @@ rm -rf $RPM_BUILD_ROOT
   [1.47-1d]
 - updated to 1.47,
 - added sockek, glibc21 & config patches prepared by
-  Maciej W. Rozycki <macro@ds2.pg.gda.pl>,
+
+  Maciek W. Ro¿ycki <macro@ds2.pg.gda.pl>,
+
 - using $RPM_OPT_FLAGS.   
 
 * Tue Sep 02 1998 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
@@ -101,24 +113,4 @@ rm -rf $RPM_BUILD_ROOT
 * Fri Jun 12 1998 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
   [1.45-1d]
 - build against glibc-2.1,
-
-* Fri Feb 27 1998 Jason Spangler <jasons@usemail.com>
-- added config patch
-
-* Fri Feb 27 1998 Jason Spangler <jasons@usemail.com>
-- changed to net-tools 1.432
-- removed old glibc 2.1 patch
-
-* Wed Oct 22 1997 Erik Troan <ewt@redhat.com>
-- added extra patches for glibc 2.1
-
-* Tue Oct 21 1997 Erik Troan <ewt@redhat.com>
-- included complete set of network protocols (some were removed for
-  initial glibc work)
-
-* Wed Sep 03 1997 Erik Troan <ewt@redhat.com>
-- updated glibc patch for glibc 2.0.5
-
-* Thu Jun 19 1997 Erik Troan <ewt@redhat.com>
-- built against glibc
-- updated to 1.33
+- start at RH spec file.
