@@ -1,8 +1,8 @@
 Summary:	Basic Networking Tools
 Summary(pl):	Podstawowe narzêdzia do obs³ugi i konfiguracji sieci
 Name:		net-tools
-Version:	1.53
-Release:	2
+Version:	1.54
+Release:	1
 Copyright:	GPL
 Group:		Networking/Admin
 Group(pl):	Sieciowe/Administracja
