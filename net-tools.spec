@@ -7,7 +7,7 @@ Summary(ru):	Базовые сетевые программы
 Summary(uk):	Базов╕ програми мереж╕
 Name:		net-tools
 Version:	1.60
-Release:	13
+Release:	13.1
 License:	GPL
 Group:		Networking/Admin
 Source0:	http://www.tazenda.demon.co.uk/phil/net-tools/%{name}-%{version}.tar.bz2
@@ -27,6 +27,7 @@ Patch9:		%{name}-nameif.patch
 Patch10:	%{name}-inet6-lookup.patch
 Patch11:	%{name}-ipx.patch
 Patch12:	%{name}-manydevs.patch
+Patch13:	%{name}-get_name.patch
 URL:		http://www.tazenda.demon.co.uk/phil/net-tools/
 BuildRequires:	gettext-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -129,6 +130,7 @@ maszyny poЁ╠czonej poprzez PLIP.
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
 
 mv po/et_EE.po po/et.po
 
