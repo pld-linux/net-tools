@@ -19,6 +19,7 @@ Patch1:		%{name}-man.patch
 Patch2:		%{name}-ipvs.patch
 Patch3:		%{name}-et.patch
 Patch4:		%{name}-no_multiline.patch
+Patch5:		%{name}-x25_address_is_struct.patch
 URL:		http://www.tazenda.demon.co.uk/phil/net-tools/
 BuildRequires:	gettext-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -113,6 +114,7 @@ maszyny po³±czonej poprzez PLIP.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 mv po/et_EE.po po/et.po
 
