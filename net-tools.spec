@@ -52,12 +52,12 @@ install %{SOURCE1} %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man8
 
 gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man{1,5,8}/* READ*
 
-%find_lang net-tools
+%find_lang %{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files -f net-tools.lang
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc READ*.gz
 
