@@ -36,15 +36,15 @@ make COPTS="$RPM_OPT_FLAGS -Wall"
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT/usr/man/pl/man8
+install -d $RPM_BUILD_ROOT%{_mandir}/pl/man8
 
 make BASEDIR=$RPM_BUILD_ROOT install
 
 strip $RPM_BUILD_ROOT/{bin/*,sbin/*}
 
-install %{SOURCE1} %{SOURCE2} $RPM_BUILD_ROOT/usr/man/pl/man8
+install %{SOURCE1} %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man8
 
-gzip -9nf $RPM_BUILD_ROOT/usr/man/{man1/*,man5/*,man8/*} READ*
+gzip -9nf $RPM_BUILD_ROOT%{_mandir}/{man1/*,man5/*,man8/*} READ*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -60,12 +60,12 @@ rm -rf $RPM_BUILD_ROOT
 %lang(fr)    /usr/share/locale/fr/LC_MESSAGES/*
 %lang(de)    /usr/share/locale/de/LC_MESSAGES/*
 
-%lang(de_DE) /usr/man/de_DE/man*/*
-%lang(fr_FR) /usr/man/fr_FR/man*/*
-%lang(pt_BR) /usr/man/pt_BR/man*/*
-%lang(pl)    /usr/man/pl/man*/*
+%lang(de_DE) %{_mandir}/de_DE/man*/*
+%lang(fr_FR) %{_mandir}/fr_FR/man*/*
+%lang(pt_BR) %{_mandir}/pt_BR/man*/*
+%lang(pl)    %{_mandir}/pl/man*/*
 
-/usr/man/man*/*
+%{_mandir}/man*/*
 
 %changelog
 * Fri Apr 23 1999 Artur Frysiak <wiget@pld.org.pl>
