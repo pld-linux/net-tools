@@ -2,7 +2,7 @@ Summary:	Basic Networking Tools
 Summary(pl):	Podstawowe narzêdzia do obs³ugi i konfiguracji sieci
 Name:		net-tools
 Version:	1.60
-Release:	1
+Release:	2
 License:	GPL
 Group:		Networking/Admin
 Group(de):	Netzwerkwesen/Administration
@@ -77,7 +77,7 @@ maszyny po³±czonej poprzez PLIP.
 %patch2 -p1
 
 %build
-%{__make} COPTS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O0 -g} -Wall" I18N=1
+%{__make} COPTS="%{rpmcflags} -Wall" I18N=1
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -91,6 +91,12 @@ install -d $RPM_BUILD_ROOT%{_mandir}/pl/man8
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_mandir}/pl/man8/ifconfig.8
 install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man8/netstat.8
+
+# standardize localized man dirs
+(cd $RPM_BUILD_ROOT%{_mandir}
+mv -f de_DE de
+mv -f fr_FR fr
+)
 
 gzip -9nf READ*
 
@@ -109,19 +115,19 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /sbin/rarp
 %attr(755,root,root) /sbin/route
 
-%lang(de) %{_mandir}/de_DE/man[15]/*
-%lang(de) %{_mandir}/de_DE/man8/arp.8*
-%lang(de) %{_mandir}/de_DE/man8/ifconfig.8*
-%lang(de) %{_mandir}/de_DE/man8/netstat.8*
-%lang(de) %{_mandir}/de_DE/man8/rarp.8*
-%lang(de) %{_mandir}/de_DE/man8/route.8*
-%lang(fr) %{_mandir}/fr_FR/man[15]/*
-%lang(fr) %{_mandir}/fr_FR/man8/arp.8*
-%lang(fr) %{_mandir}/fr_FR/man8/ifconfig.8*
-%lang(fr) %{_mandir}/fr_FR/man8/netstat.8*
-%lang(fr) %{_mandir}/fr_FR/man8/rarp.8*
-%lang(fr) %{_mandir}/fr_FR/man8/route.8*
-%lang(pt) %{_mandir}/pt_BR/man*/*
+%lang(de) %{_mandir}/de/man[15]/*
+%lang(de) %{_mandir}/de/man8/arp.8*
+%lang(de) %{_mandir}/de/man8/ifconfig.8*
+%lang(de) %{_mandir}/de/man8/netstat.8*
+%lang(de) %{_mandir}/de/man8/rarp.8*
+%lang(de) %{_mandir}/de/man8/route.8*
+%lang(fr) %{_mandir}/fr/man[15]/*
+%lang(fr) %{_mandir}/fr/man8/arp.8*
+%lang(fr) %{_mandir}/fr/man8/ifconfig.8*
+%lang(fr) %{_mandir}/fr/man8/netstat.8*
+%lang(fr) %{_mandir}/fr/man8/rarp.8*
+%lang(fr) %{_mandir}/fr/man8/route.8*
+%lang(pt_BR) %{_mandir}/pt_BR/man*/*
 %lang(pl) %{_mandir}/pl/man*/*
 
 %{_mandir}/man[15]/*
@@ -135,13 +141,13 @@ rm -rf $RPM_BUILD_ROOT
 %files -n slattach
 %defattr(644,root,root,755)
 %attr(755,root,root) /sbin/slattach
-%lang(de) %{_mandir}/de_DE/man8/slattach.8*
-%lang(fr) %{_mandir}/fr_FR/man8/slattach.8*
+%lang(de) %{_mandir}/de/man8/slattach.8*
+%lang(fr) %{_mandir}/fr/man8/slattach.8*
 %{_mandir}/man8/slattach.8*
 
 %files -n plipconfig
 %defattr(644,root,root,755)
 %attr(755,root,root) /sbin/plipconfig
-%lang(de) %{_mandir}/de_DE/man8/plipconfig.8*
-%lang(fr) %{_mandir}/fr_FR/man8/plipconfig.8*
+%lang(de) %{_mandir}/de/man8/plipconfig.8*
+%lang(fr) %{_mandir}/fr/man8/plipconfig.8*
 %{_mandir}/man8/plipconfig.8*
