@@ -1,12 +1,14 @@
 Summary:	Basic Networking Tools
 Summary(pl):	Podstawowe narzêdzia do obs³ugi i konfiguracji sieci
 Name:		net-tools
-Version:	1.51
-Release:	2
+Version:	1.52
+Release:	1
 Copyright:	GPL
 Group:		Networking/Admin
 Group(pl):	Sieci/Administracja
-Source:		http://www.tazenda.demon.co.uk/phil/net-tools/%{name}-%{version}.tar.bz2
+Source0:	http://www.tazenda.demon.co.uk/phil/net-tools/%{name}-%{version}.tar.bz2
+Source1:	ifconfig.8.pl
+Source2:	netstat.8.pl
 Patch0:		net-tools-config.patch
 Patch1:		net-tools-man.patch
 URL:		http://www.tazenda.demon.co.uk/phil/net-tools/
@@ -34,26 +36,44 @@ make COPTS="$RPM_OPT_FLAGS -Wall"
 %install
 rm -rf $RPM_BUILD_ROOT
 
+install -d $RPM_BUILD_ROOT/usr/man/pl/man8
+
 make BASEDIR=$RPM_BUILD_ROOT install
 
 strip $RPM_BUILD_ROOT/{bin/*,sbin/*}
 
-gzip -9nf $RPM_BUILD_ROOT/usr/man/{man1/*,man5/*,man8/*} ABOUT-NLS READ*
+install %{SOURCE1} %{SOURCE2} $RPM_BUILD_ROOT/usr/man/pl/man8
+
+gzip -9nf $RPM_BUILD_ROOT/usr/man/{man1/*,man5/*,man8/*} READ*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc {ABOUT-NLS,READ*}.gz
+%doc READ*.gz
 
 %attr(755,root,root) /sbin/*
 %attr(755,root,root) /bin/*
-/usr/man/man[158]/*
 
-%lang(pt) /usr/share/locale/pt_BR/LC_MESSAGES/*
+%lang(pt_BR) /usr/share/locale/pt_BR/LC_MESSAGES/*
+%lang(fr)    /usr/share/locale/fr/LC_MESSAGES/*
+%lang(de)    /usr/share/locale/de/LC_MESSAGES/*
+
+%lang(de_DE) /usr/man/de_DE/man*/*
+%lang(fr_FR) /usr/man/fr_FR/man*/*
+%lang(pt_BR) /usr/man/pt_BR/man*/*
+%lang(pl)    /usr/man/pl/man*/*
+
+/usr/man/man*/*
 
 %changelog
+* Fri Apr 23 1999 Artur Frysiak <wiget@pld.org.pl>
+  [1.52-1]
+- compiled on rpm 3
+- added IRDa support
+- added more locales
+
 * Thu Apr 15 1999 Micha³ Kuratczyk <kura@pld.org.pl>
   [1.51-2]
 - gzipping documentation (instead bzipping)
