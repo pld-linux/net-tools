@@ -1,7 +1,7 @@
-diff -u --recursive --new-file net-tools.macro/config.h net-tools/config.h
---- net-tools.macro/config.h	Thu Jan  1 00:00:00 1970
-+++ net-tools/config.h	Tue Sep 15 10:44:21 1998
-@@ -0,0 +1,61 @@
+diff -urN net-tools-1.52.old/config.h net-tools-1.52/config.h
+--- net-tools-1.52.old/config.h	Thu Jan  1 01:00:00 1970
++++ net-tools-1.52/config.h	Fri Apr 23 10:49:40 1999
+@@ -0,0 +1,68 @@
 +/*
 +* config.h	Automatically generated configuration includefile
 +*
@@ -15,15 +15,12 @@ diff -u --recursive --new-file net-tools.macro/config.h net-tools/config.h
 +
 +/* 
 + * 
-+ * I18N
++ * Internationalization
 + * 
-+ * (Internationalization)
-+ * 
-+ * In this BETA Release the I18N (NLS) is enabled and now based
-+ * on GNU gettext, only a brazilian portuguese catalog (translation)
-+ * is present, but others are *highly* welcome!
-+ * 
-+ * (answer 'n' if you have no system with GNU gettext support)
++ * The net-tools package has currently been translated to French,
++ * German and Brazilian Portugese.  Other translations are, of
++ * course, welcome.  Answer `n' here if you have no support for
++ * internationalization on your system.
 + * 
 + */
 +#define I18N 1
@@ -42,6 +39,7 @@ diff -u --recursive --new-file net-tools.macro/config.h net-tools/config.h
 +#define HAVE_AFNETROM 1
 +#define HAVE_AFROSE 1
 +#define HAVE_AFECONET 1
++#define HAVE_AFDECnet 1
 +
 +/* 
 + * 
@@ -63,10 +61,31 @@ diff -u --recursive --new-file net-tools.macro/config.h net-tools/config.h
 +#define HAVE_HWHIPPI 1
 +#define HAVE_HWASH 1
 +#define HAVE_HWHDLCLAPB 1
-diff -u --recursive --new-file net-tools.macro/config.status net-tools/config.status
---- net-tools.macro/config.status	Thu Jan  1 00:00:00 1970
-+++ net-tools/config.status	Tue Sep 15 10:44:21 1998
-@@ -0,0 +1,80 @@
++#define HAVE_HWIRDA 1
++
++/* 
++ * 
++ * Other Features.
++ * 
++ */
++#define HAVE_FW_MASQUERADE 1
++#define HAVE_IP_TOOLS 1
+diff -urN net-tools-1.52.old/config.make net-tools-1.52/config.make
+--- net-tools-1.52.old/config.make	Wed Apr 21 19:48:58 1999
++++ net-tools-1.52/config.make	Fri Apr 23 10:49:40 1999
+@@ -8,7 +8,7 @@
+ HAVE_AFNETROM=1
+ HAVE_AFROSE=1
+ HAVE_AFECONET=1
+-# HAVE_AFDECnet=0
++HAVE_AFDECnet=1
+ HAVE_HWETHER=1
+ HAVE_HWARC=1
+ HAVE_HWSLIP=1
+diff -urN net-tools-1.52.old/config.status net-tools-1.52/config.status
+--- net-tools-1.52.old/config.status	Thu Jan  1 01:00:00 1970
++++ net-tools-1.52/config.status	Fri Apr 23 10:49:40 1999
+@@ -0,0 +1,85 @@
 +#
 +# config.in	Configure.sh source for the net-tools.
 +#		This file contains the definition of what the support
@@ -77,7 +96,7 @@ diff -u --recursive --new-file net-tools.macro/config.status net-tools/config.st
 +#		NET-3 Networking Distribution for the LINUX operating
 +#		system.
 +#
-+# Version:	config.in 1.21	(98-06-30)
++# Version:	config.in 1.22	(99-04-19)
 +#
 +# Author:	Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
 +#		Copyright 1988-1993 MicroWalt Corporation
@@ -104,15 +123,12 @@ diff -u --recursive --new-file net-tools.macro/config.status net-tools/config.st
 +=  */
 +*
 +*
-+*                     I18N
++*              Internationalization
 +*
-+*              (Internationalization)
-+*
-+* In this BETA Release the I18N (NLS) is enabled and now based
-+* on GNU gettext, only a brazilian portuguese catalog (translation)
-+* is present, but others are *highly* welcome!
-+*
-+* (answer 'n' if you have no system with GNU gettext support)
++* The net-tools package has currently been translated to French,
++* German and Brazilian Portugese.  Other translations are, of
++* course, welcome.  Answer `n' here if you have no support for
++* internationalization on your system.
 +*
 +bool 'Does your system support GNU gettext?' I18N y
 +*
@@ -128,6 +144,7 @@ diff -u --recursive --new-file net-tools.macro/config.status net-tools/config.st
 +bool 'NET/ROM (packet radio) protocol family' HAVE_AFNETROM y
 +bool 'Rose (packet radio) protocol family' HAVE_AFROSE y
 +bool 'Econet protocol family' HAVE_AFECONET y
++bool 'DECnet protocol family' HAVE_AFDECnet y
 +*
 +*
 +*            Device Hardware types.
@@ -147,3 +164,10 @@ diff -u --recursive --new-file net-tools.macro/config.status net-tools/config.st
 +bool 'HIPPI (generic) support' HAVE_HWHIPPI y
 +bool 'Ash hardware support' HAVE_HWASH y
 +bool '(Cisco)-HDLC/LAPB support' HAVE_HWHDLCLAPB y
++bool 'IrDA support' HAVE_HWIRDA y
++*
++*
++*           Other Features.
++*
++bool 'IP Masquerading support' HAVE_FW_MASQUERADE y
++bool 'Build iptunnel and ipmaddr' HAVE_IP_TOOLS y
