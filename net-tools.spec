@@ -130,7 +130,6 @@ rm -rf $RPM_BUILD_ROOT
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
 # standardize localized man dirs
-cd $RPM_BUILD_ROOT%{_mandir}
 mv -f $RPM_BUILD_ROOT%{_mandir}/{de_DE/man1/*,de/man1}
 rmdir $RPM_BUILD_ROOT%{_mandir}/de_DE/man1
 mv -f $RPM_BUILD_ROOT%{_mandir}/{de_DE/*,de}
