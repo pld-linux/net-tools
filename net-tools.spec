@@ -2,7 +2,7 @@ Summary:	Basic Networking Tools
 Summary(pl):	Podstawowe narzêdzia do obs³ugi i konfiguracji sieci
 Name:		net-tools
 Version:	1.51
-Release:	1
+Release:	2
 Copyright:	GPL
 Group:		Networking/Admin
 Group(pl):	Sieci/Administracja
@@ -38,23 +38,27 @@ make BASEDIR=$RPM_BUILD_ROOT install
 
 strip $RPM_BUILD_ROOT/{bin/*,sbin/*}
 
-gzip -nf9 $RPM_BUILD_ROOT/usr/man/{man1/*,man5/*,man8/*}
-bzip2 -9 ABOUT-NLS READ*
+gzip -9nf $RPM_BUILD_ROOT/usr/man/{man1/*,man5/*,man8/*} ABOUT-NLS READ*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc ABOUT-NLS.bz2 READ*
+%doc {ABOUT-NLS,READ*}.gz
 
 %attr(755,root,root) /sbin/*
 %attr(755,root,root) /bin/*
-%attr(644,root, man) /usr/man/man[158]/*
+/usr/man/man[158]/*
 
 %lang(pt) /usr/share/locale/pt_BR/LC_MESSAGES/*
 
 %changelog
+* Thu Apr 15 1999 Micha³ Kuratczyk <kura@pld.org.pl>
+  [1.51-2]
+- gzipping documentation (instead bzipping)
+- removed man group from man pages
+
 * Mon Nov 30 1998 Arkadiusz Mi¶kiewicz <misiek@misiek.eu.org>
   [1.48-1d]
 - new upstream release
