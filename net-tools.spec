@@ -12,6 +12,7 @@ Source2:	netstat.8.pl
 Patch0:		net-tools-config.patch
 Patch1:		net-tools-man.patch
 Patch2:		net-tools-compile.patch
+Patch3:		net-tools-mandir.patch
 URL:		http://www.tazenda.demon.co.uk/phil/net-tools/
 Buildroot:	/tmp/%{name}-%{version}-root
 Obsoletes:	slattach
@@ -31,6 +32,7 @@ aplikacje.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 make COPTS="$RPM_OPT_FLAGS -Wall" 
@@ -38,18 +40,17 @@ make COPTS="$RPM_OPT_FLAGS -Wall"
 %install
 rm -rf $RPM_BUILD_ROOT
 
-make \
-    BASEDIR=$RPM_BUILD_ROOT \
-    INSTALL="/bin/install" install
+make install \
+	BASEDIR=$RPM_BUILD_ROOT \
+	INSTALL="/usr/bin/install" \
+	mandir=%{_mandir}
 
 strip $RPM_BUILD_ROOT/{bin/*,sbin/*}
-
-mv $RPM_BUILD_ROOT%{_prefix}/man $RPM_BUILD_ROOT%{_datadir}
 
 install -d $RPM_BUILD_ROOT%{_mandir}/pl/man8
 install %{SOURCE1} %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man8
 
-gzip -9nf $RPM_BUILD_ROOT%{_mandir}/{man1/*,man5/*,man8/*} READ*
+gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man{1,5,8}/* READ*
 
 %find_lang net-tools
 
