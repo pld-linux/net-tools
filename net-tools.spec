@@ -2,14 +2,13 @@ Summary:	Basic Networking Tools
 Summary(pl):	Podstawowe narzêdzia do obs³ugi i konfiguracji sieci
 Name:		net-tools
 Version:	1.60
-Release:	2
+Release:	3
 License:	GPL
 Group:		Networking/Admin
 Group(de):	Netzwerkwesen/Administration
 Group(pl):	Sieciowe/Administacyjne
 Source0:	http://www.tazenda.demon.co.uk/phil/net-tools/%{name}-%{version}.tar.bz2
-Source1:	ifconfig.8.pl
-Source2:	netstat.8.pl
+Source1:	%{name}-non-english-man-pages.tar.bz2
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-man.patch
 Patch2:		%{name}-ipvs.patch
@@ -70,7 +69,7 @@ zale¿± od hardware portu równoleg³ego, kabla, szybko¶ci CPU ka¿dej
 maszyny po³±czonej poprzez PLIP.
 
 %prep
-%setup  -q 
+%setup  -q
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -88,13 +87,14 @@ install -d $RPM_BUILD_ROOT%{_mandir}/pl/man8
 	mandir=%{_mandir} \
 	I18N=1
 
-install %{SOURCE1} $RPM_BUILD_ROOT%{_mandir}/pl/man8/ifconfig.8
-install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man8/netstat.8
+bzip2 -dc %{SOURCE1} | tar -xf - -C $RPM_BUILD_ROOT%{_mandir}
 
 # standardize localized man dirs
 (cd $RPM_BUILD_ROOT%{_mandir}
 mv -f de_DE de
 mv -f fr_FR fr
+# we can do it safely as no pt/pt_PT man pages appeared here yet
+mv -f pt_BR pt
 )
 
 gzip -9nf READ*
@@ -114,34 +114,38 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /sbin/rarp
 %attr(755,root,root) /sbin/route
 
+%lang(da) %{_mandir}/da/man[15]/*
+# No da man8
 %lang(de) %{_mandir}/de/man[15]/*
-%lang(de) %{_mandir}/de/man8/arp.8*
-%lang(de) %{_mandir}/de/man8/ifconfig.8*
-%lang(de) %{_mandir}/de/man8/netstat.8*
-%lang(de) %{_mandir}/de/man8/rarp.8*
-%lang(de) %{_mandir}/de/man8/route.8*
+%lang(de) %{_mandir}/de/man8/[^ps]*
+%lang(es) %{_mandir}/es/man[15]/*
+%lang(es) %{_mandir}/es/man8/[^ps]*
+%lang(fi) %{_mandir}/fi/man[15]/*
+# No fi man8
 %lang(fr) %{_mandir}/fr/man[15]/*
-%lang(fr) %{_mandir}/fr/man8/arp.8*
-%lang(fr) %{_mandir}/fr/man8/ifconfig.8*
-%lang(fr) %{_mandir}/fr/man8/netstat.8*
-%lang(fr) %{_mandir}/fr/man8/rarp.8*
-%lang(fr) %{_mandir}/fr/man8/route.8*
-%lang(pt_BR) %{_mandir}/pt_BR/man*/*
-%lang(pl) %{_mandir}/pl/man*/*
+%lang(fr) %{_mandir}/fr/man8/[^ps]*
+%lang(hu) %{_mandir}/hu/man[15]/*
+%lang(hu) %{_mandir}/hu/man8/[^ps]*
+%lang(id) %{_mandir}/id/man[15]/*
+%lang(id) %{_mandir}/id/man8/[^ps]*
+%lang(it) %{_mandir}/it/man[15]/*
+%lang(it) %{_mandir}/it/man8/[^ps]*
+# No nl man[15]
+%lang(nl) %{_mandir}/nl/man8/[^ps]*
+%lang(pt) %{_mandir}/pt/man[15]/*
+%lang(pt) %{_mandir}/pt/man8/[^ps]*
+%lang(pl) %{_mandir}/pl/man[15]/*
+%lang(pl) %{_mandir}/pl/man8/[^ps]*
 
 %{_mandir}/man[15]/*
-%{_mandir}/man8/arp.8*
-%{_mandir}/man8/ifconfig.8*
-%{_mandir}/man8/netstat.8*
-%{_mandir}/man8/mii-tool.8*
-%{_mandir}/man8/rarp.8*
-%{_mandir}/man8/route.8*
+%{_mandir}/man8/[^ps]*
 
 %files -n slattach
 %defattr(644,root,root,755)
 %attr(755,root,root) /sbin/slattach
 %lang(de) %{_mandir}/de/man8/slattach.8*
 %lang(fr) %{_mandir}/fr/man8/slattach.8*
+%lang(pl) %{_mandir}/pl/man8/slattach.8*
 %{_mandir}/man8/slattach.8*
 
 %files -n plipconfig
