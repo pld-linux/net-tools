@@ -5,8 +5,6 @@ Version:	1.60
 Release:	5
 License:	GPL
 Group:		Networking/Admin
-Group(de):	Netzwerkwesen/Administration
-Group(pl):	Sieciowe/Administracyjne
 Source0:	http://www.tazenda.demon.co.uk/phil/net-tools/%{name}-%{version}.tar.bz2
 Source1:	%{name}-non-english-man-pages.tar.bz2
 Patch0:		%{name}-config.patch
@@ -34,8 +32,6 @@ mniej wa¿ne aplikacje.
 Summary:	slattach - attach a network interface to a serial line
 Summary(pl):	slattach - do³±cz interfejs sieciowy do lini szeregowej
 Group:		Networking/Admin
-Group(de):	Netzwerkwesen/Administration
-Group(pl):	Sieciowe/Administracyjne
 Requires:	%{name} = %{version}
 
 %description -n slattach
@@ -52,8 +48,6 @@ umo¿liwia na po³±czenia point-to-point z innym komputerem.
 Summary:	plipconfig - fine tune PLIP device parameters
 Summary(pl):	plipconfig - dostrajanie parametrów urz±dzenia PLIP
 Group:		Networking/Admin
-Group(de):	Netzwerkwesen/Administration
-Group(pl):	Sieciowe/Administracyjne
 Requires:	%{name} = %{version}
 
 %description -n plipconfig
