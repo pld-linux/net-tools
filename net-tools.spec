@@ -88,8 +88,8 @@ terminal ("serial") line into one of several "network" modes, thus
 allowing you to use it for point-to-point links to other computers.
 
 %description -n slattach -l pl
-Slattach jest prostym programem, który umo¿liwia zamianê zwyk³ej lini
-terminala ("szeregowej") w jednen z kilku trybów "sieciowych" przez co
+Slattach jest prostym programem, który umo¿liwia zamianê zwyk³ej linii
+terminala ("szeregowej") w jeden z kilku trybów "sieciowych" przez co
 umo¿liwia na po³±czenia point-to-point z innym komputerem.
 
 %package -n plipconfig
