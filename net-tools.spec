@@ -19,7 +19,6 @@ Patch3:		%{name}-et.patch
 URL:		http://www.tazenda.demon.co.uk/phil/net-tools/
 BuildRequires:	gettext-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-Conflicts:	sh-utils < 2.0.11-10
 
 %define		_bindir		/bin
 %define		_sbindir	/sbin
