@@ -1,9 +1,9 @@
 Summary:	Basic Networking Tools
 Summary(pl):	Podstawowe narzêdzia do obs³ugi i konfiguracji sieci
 Name:		net-tools
-Version:	1.54
+Version:	1.55
 Release:	1
-Copyright:	GPL
+License:	GPL
 Group:		Networking/Admin
 Group(pl):	Sieciowe/Administracja
 Source0:	http://www.tazenda.demon.co.uk/phil/net-tools/%{name}-%{version}.tar.bz2
@@ -13,18 +13,18 @@ Patch0:		net-tools-config.patch
 Patch1:		net-tools-man.patch
 Patch2:		net-tools-mandir.patch
 URL:		http://www.tazenda.demon.co.uk/phil/net-tools/
-Buildroot:	/tmp/%{name}-%{version}-root
+Buildroot:	/tmp/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	slattach
 
 %description
 This is a collection of the basic tools necessary for setting up networking
-on a Linux machine. It includes ifconfig, route, netstat, rarp, and
-some other minor tools.
+on a Linux machine. It includes ifconfig, route, netstat, rarp, and some
+other minor tools.
 
 %description -l pl
 Pakiet ten zawiera zbiór podstawowych narzêdzi do konfigurowania sieci.
 Znajduj± siê tutaj: ifconfig, route, netstat, rarp oraz inne - mniej wa¿ne
-aplikacje.   
+aplikacje.
 
 %prep
 %setup  -q 
@@ -40,7 +40,7 @@ rm -rf $RPM_BUILD_ROOT
 
 make install \
 	BASEDIR=$RPM_BUILD_ROOT \
-	INSTALL="/usr/bin/install" \
+	INSTALL="%{_bindir}/install" \
 	mandir=%{_mandir} \
 	I18N=1
 
