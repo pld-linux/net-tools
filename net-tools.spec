@@ -6,10 +6,10 @@ Release:	1
 Copyright:	GPL
 Group:		Networking/Admin
 Group(pl):	Sieci/Administracja
-Source:		%{name}-%{version}.tar.bz2
+Source:		http://www.tazenda.demon.co.uk/phil/net-tools/%{name}-%{version}.tar.bz2
 Patch0:		net-tools-config.patch
 Patch1:		net-tools-man.patch
-URL:		http://www.tazenda.demon.co.uk/phil/net-tools
+URL:		http://www.tazenda.demon.co.uk/phil/net-tools/
 Buildroot:	/tmp/%{name}-%{version}-root
 Obsoletes:	slattach
 
