@@ -1,5 +1,5 @@
---- po/Makefile~	Sun May 19 23:20:20 2002
-+++ po/Makefile	Sun May 19 23:20:20 2002
+--- net-tools-1.60/po/Makefile~	Sun May 19 23:20:20 2002
++++ net-tools-1.60/po/Makefile	Sun May 19 23:20:20 2002
 @@ -9,7 +9,7 @@
  
  -include ../config.make
