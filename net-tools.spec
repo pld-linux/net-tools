@@ -56,9 +56,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /sbin/*
 %attr(755,root,root) /bin/*
 
-%lang(pt_BR) /usr/share/locale/pt_BR/LC_MESSAGES/*
-%lang(fr)    /usr/share/locale/fr/LC_MESSAGES/*
-%lang(de)    /usr/share/locale/de/LC_MESSAGES/*
+%lang(pt_BR) %{_datadir}/locale/pt_BR/LC_MESSAGES/*
+%lang(fr)    %{_datadir}/locale/fr/LC_MESSAGES/*
+%lang(de)    %{_datadir}/locale/de/LC_MESSAGES/*
 
 %lang(de_DE) %{_mandir}/de_DE/man*/*
 %lang(fr_FR) %{_mandir}/fr_FR/man*/*
