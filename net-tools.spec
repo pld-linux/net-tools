@@ -6,7 +6,7 @@ Release:	4
 License:	GPL
 Group:		Networking/Admin
 Group(de):	Netzwerkwesen/Administration
-Group(pl):	Sieciowe/Administacyjne
+Group(pl):	Sieciowe/Administracyjne
 Source0:	http://www.tazenda.demon.co.uk/phil/net-tools/%{name}-%{version}.tar.bz2
 Source1:	%{name}-non-english-man-pages.tar.bz2
 Patch0:		%{name}-config.patch
@@ -16,6 +16,9 @@ URL:		http://www.tazenda.demon.co.uk/phil/net-tools/
 BuildRequires:	gettext-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Conflicts:	sh-utils < 2.0.11-10
+
+%define		_bindir		/bin
+%define		_sbindir	/sbin
 
 %description
 This is a collection of the basic tools necessary for setting up
@@ -32,7 +35,7 @@ Summary:	slattach - attach a network interface to a serial line
 Summary(pl):	slattach - do³±cz interfejs sieciowy do lini szeregowej
 Group:		Networking/Admin
 Group(de):	Netzwerkwesen/Administration
-Group(pl):	Sieciowe/Administacyjne
+Group(pl):	Sieciowe/Administracyjne
 Requires:	%{name} = %{version}
 
 %description -n slattach
@@ -50,7 +53,7 @@ Summary:	plipconfig - fine tune PLIP device parameters
 Summary(pl):	plipconfig - dostrajanie parametrów urz±dzenia PLIP
 Group:		Networking/Admin
 Group(de):	Netzwerkwesen/Administration
-Group(pl):	Sieciowe/Administacyjne
+Group(pl):	Sieciowe/Administracyjne
 Requires:	%{name} = %{version}
 
 %description -n plipconfig
@@ -107,12 +110,12 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc *.gz
-%attr(755,root,root) /bin/*
-%attr(755,root,root) /sbin/arp
-%attr(755,root,root) /sbin/ifconfig
-%attr(755,root,root) /sbin/mii-tool
-%attr(755,root,root) /sbin/rarp
-%attr(755,root,root) /sbin/route
+%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_sbindir}/arp
+%attr(755,root,root) %{_sbindir}/ifconfig
+%attr(755,root,root) %{_sbindir}/mii-tool
+%attr(755,root,root) %{_sbindir}/rarp
+%attr(755,root,root) %{_sbindir}/route
 
 %lang(da) %{_mandir}/da/man[15]/*
 # No da man8
@@ -144,7 +147,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n slattach
 %defattr(644,root,root,755)
-%attr(755,root,root) /sbin/slattach
+%attr(755,root,root) %{_sbindir}/slattach
 %lang(de) %{_mandir}/de/man8/slattach.8*
 %lang(fr) %{_mandir}/fr/man8/slattach.8*
 %lang(ja) %{_mandir}/ja/man8/slattach.8*
@@ -153,7 +156,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n plipconfig
 %defattr(644,root,root,755)
-%attr(755,root,root) /sbin/plipconfig
+%attr(755,root,root) %{_sbindir}/plipconfig
 %lang(de) %{_mandir}/de/man8/plipconfig.8*
 %lang(fr) %{_mandir}/fr/man8/plipconfig.8*
 %lang(ja) %{_mandir}/ja/man8/plipconfig.8*
