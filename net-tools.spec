@@ -14,9 +14,8 @@ Patch0:		%{name}-config.patch
 Patch1:		%{name}-man.patch
 Patch2:		%{name}-ipvs.patch
 URL:		http://www.tazenda.demon.co.uk/phil/net-tools/
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 BuildRequires:	gettext-devel
-Obsoletes:	slattach
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 This is a collection of the basic tools necessary for setting up
