@@ -87,7 +87,7 @@ install -d $RPM_BUILD_ROOT%{_mandir}/pl/man8
 	mandir=%{_mandir} \
 	I18N=1
 
-bzip2 -dc %{SOURCE1} | tar -xf - -C $RPM_BUILD_ROOT%{_mandir}
+bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
 # standardize localized man dirs
 (cd $RPM_BUILD_ROOT%{_mandir}
