@@ -1,0 +1,11 @@
+--- po/Makefile~	Sun May 19 23:20:20 2002
++++ po/Makefile	Sun May 19 23:20:20 2002
+@@ -9,7 +9,7 @@
+ 
+ -include ../config.make
+ ifeq ($(I18N),1)
+-CATALOGS = de.mo fr.mo pt_BR.mo et_EE.mo cs.mo
++CATALOGS = de.mo fr.mo pt_BR.mo et.mo cs.mo
+ else
+ CATALOGS =
+ endif
