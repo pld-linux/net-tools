@@ -111,11 +111,12 @@ maszyny po³±czonej poprzez PLIP.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p0
-%patch4
+%patch3 -p1
+%patch4 -p1
+
+mv po/et_EE.po po/et.po
 
 %build
-mv po/et_EE.po po/et.po
 %{__make} COPTS="%{rpmcflags} -Wall" I18N=1
 
 %install
@@ -130,12 +131,12 @@ rm -rf $RPM_BUILD_ROOT
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
 # standardize localized man dirs
-(cd $RPM_BUILD_ROOT%{_mandir}
+cd $RPM_BUILD_ROOT%{_mandir}
 mv -f de_DE/*/* de/*/
 mv -f fr_FR fr
 # we can do it safely as no pt/pt_PT man pages appeared here yet
-mv -f pt_BR pt
-)
+mv pt_BR pt
+cd ..
 
 %find_lang %{name}
 
