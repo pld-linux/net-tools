@@ -12,7 +12,7 @@ License:	GPL
 Group:		Networking/Admin
 Source0:	http://www.tazenda.demon.co.uk/phil/net-tools/%{name}-%{version}.tar.bz2
 # Source0-md5:	888774accab40217dde927e21979c165
-Source1:	%{name}-non-english-man-pages.tar.bz2
+Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	9cee6ac0a07a0bf34fbc71add1eb2ead
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-man.patch
@@ -131,11 +131,11 @@ bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
 # standardize localized man dirs
 cd $RPM_BUILD_ROOT%{_mandir}
-mv -f de_DE/*/* de/*/
-mv -f fr_FR fr
+mv -f $RPM_BUILD_ROOT%{_mandir}/{de_DE/man1/*,de/man1}
+mv -f $RPM_BUILD_ROOT%{_mandir}/{de_DE/*,de}
+mv -f $RPM_BUILD_ROOT%{_mandir}/{fr_FR,fr}
 # we can do it safely as no pt/pt_PT man pages appeared here yet
-mv pt_BR pt
-cd ..
+mv $RPM_BUILD_ROOT%{_mandir}/{pt_BR,pt}
 
 %find_lang %{name}
 
