@@ -7,7 +7,7 @@ Summary(ru):	Базовые сетевые программы
 Summary(uk):	Базов╕ програми мереж╕
 Name:		net-tools
 Version:	1.60
-Release:	6
+Release:	7
 License:	GPL
 Group:		Networking/Admin
 Source0:	http://www.tazenda.demon.co.uk/phil/net-tools/%{name}-%{version}.tar.bz2
@@ -128,13 +128,11 @@ bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
 # standardize localized man dirs
 (cd $RPM_BUILD_ROOT%{_mandir}
-mv -f de_DE de
+mv -f de_DE/*/* de/*/
 mv -f fr_FR fr
 # we can do it safely as no pt/pt_PT man pages appeared here yet
 mv -f pt_BR pt
 )
-
-gzip -9nf READ*
 
 %find_lang %{name}
 
@@ -143,13 +141,14 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc *.gz
+%doc READ*
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_sbindir}/arp
 %attr(755,root,root) %{_sbindir}/ifconfig
 %attr(755,root,root) %{_sbindir}/mii-tool
 %attr(755,root,root) %{_sbindir}/rarp
 %attr(755,root,root) %{_sbindir}/route
+%attr(755,root,root) %{_sbindir}/nameif
 
 # No de man8
 %lang(de) %{_mandir}/de/man[15]/*
