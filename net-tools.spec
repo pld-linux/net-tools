@@ -2,7 +2,7 @@ Summary:	Basic Networking Tools
 Summary(pl):	Podstawowe narzêdzia do obs³ugi i konfiguracji sieci
 Name:		net-tools
 Version:	1.57
-Release:	3
+Release:	4
 License:	GPL
 Group:		Networking/Admin
 Group(de):	Netzwerkwesen/Administration
@@ -16,6 +16,7 @@ Patch2:		%{name}-mandir.patch
 Patch3:		%{name}-ipvs.patch
 URL:		http://www.tazenda.demon.co.uk/phil/net-tools/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+BuildRequires:	gettext-devel
 Obsoletes:	slattach
 
 %description
