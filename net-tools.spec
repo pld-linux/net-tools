@@ -1,8 +1,8 @@
 Summary:	Basic Networking Tools
 Summary(pl):	Podstawowe narzêdzia do obs³ugi i konfiguracji sieci
 Name:		net-tools
-Version:	1.57
-Release:	5
+Version:	1.58
+Release:	1
 License:	GPL
 Group:		Networking/Admin
 Group(de):	Netzwerkwesen/Administration
@@ -12,10 +12,7 @@ Source1:	ifconfig.8.pl
 Source2:	netstat.8.pl
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-man.patch
-Patch2:		%{name}-mandir.patch
-Patch3:		%{name}-ipvs.patch
-Patch4:		%{name}-bug9129.patch
-Patch5:		%{name}-bug9215.patch
+Patch2:		%{name}-ipvs.patch
 URL:		http://www.tazenda.demon.co.uk/phil/net-tools/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 BuildRequires:	gettext-devel
@@ -33,6 +30,7 @@ mniej wa¿ne aplikacje.
 
 %package -n slattach
 Summary:	slattach - attach a network interface to a serial line
+Summary(pl):	slattach - do³±cz interfejs sieciowy do lini szeregowej
 Group:		Networking/Admin
 Group(de):	Netzwerkwesen/Administration
 Group(pl):	Sieciowe/Administacyjne
@@ -43,8 +41,14 @@ Slattach is a tiny little program that can be used to put a normal
 terminal ("serial") line into one of several "network" modes, thus
 allowing you to use it for point-to-point links to other computers.
 
+%description -n slattach -l pl
+Slattach jest prostym programem, który umo¿liwia zamianê zwyk³ej
+lini terminala ("szeregowej") w jednen z kilku trybów "sieciowych"
+przez co umo¿liwia na po³±czenia point-to-point z innym komputerem.
+
 %package -n plipconfig
 Summary:	plipconfig - fine tune PLIP device parameters
+Summary(pl):	plipconfig - dostrajanie parametrów urz±dzenia PLIP
 Group:		Networking/Admin
 Group(de):	Netzwerkwesen/Administration
 Group(pl):	Sieciowe/Administacyjne
@@ -60,14 +64,17 @@ If the single interface argument is given, plipconfig displays the
 status of the given interface only. Otherwise, it will try to set the
 options.
 
+%description -n plipconfig -l pl
+Plipconfig jest u¿ywany do poprawienia wydajno¶ci PLIP poprzez zmianê
+domy¶lnych czasowych parametrów u¿ywanych w protokole PLIP.
+Rezultaty zale¿± od hardware portu równoleg³ego, kabla, szybko¶ci CPU
+ka¿dej maszyny po³±czonej poprzez PLIP.
+
 %prep
 %setup  -q 
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
 
 %build
 %{__make} COPTS="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS} -Wall" I18N=1
