@@ -11,7 +11,9 @@ Release:	7
 License:	GPL
 Group:		Networking/Admin
 Source0:	http://www.tazenda.demon.co.uk/phil/net-tools/%{name}-%{version}.tar.bz2
+# Source0-md5:	888774accab40217dde927e21979c165
 Source1:	%{name}-non-english-man-pages.tar.bz2
+# Source1-md5:	9cee6ac0a07a0bf34fbc71add1eb2ead
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-man.patch
 Patch2:		%{name}-ipvs.patch
@@ -105,7 +107,7 @@ zale¿± od hardware portu równoleg³ego, kabla, szybko¶ci CPU ka¿dej
 maszyny po³±czonej poprzez PLIP.
 
 %prep
-%setup  -q
+%setup -q
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
