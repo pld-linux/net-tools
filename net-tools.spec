@@ -2,7 +2,7 @@ Summary:	Basic Networking Tools
 Summary(pl):	Podstawowe narzêdzia do obs³ugi i konfiguracji sieci
 Name:		net-tools
 Version:	1.57
-Release:	4
+Release:	5
 License:	GPL
 Group:		Networking/Admin
 Group(de):	Netzwerkwesen/Administration
@@ -14,6 +14,8 @@ Patch0:		%{name}-config.patch
 Patch1:		%{name}-man.patch
 Patch2:		%{name}-mandir.patch
 Patch3:		%{name}-ipvs.patch
+Patch4:		%{name}-bug9129.patch
+Patch5:		%{name}-bug9215.patch
 URL:		http://www.tazenda.demon.co.uk/phil/net-tools/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 BuildRequires:	gettext-devel
@@ -64,12 +66,15 @@ options.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
 %{__make} COPTS="%{?debug:-O -g}%{!?debug:$RPM_OPT_FLAGS} -Wall" I18N=1
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_mandir}/pl/man8
 
 %{__make} install \
 	BASEDIR=$RPM_BUILD_ROOT \
@@ -77,7 +82,6 @@ rm -rf $RPM_BUILD_ROOT
 	mandir=%{_mandir} \
 	I18N=1
 
-install -d $RPM_BUILD_ROOT%{_mandir}/pl/man8
 install %{SOURCE1} $RPM_BUILD_ROOT%{_mandir}/pl/man8/ifconfig.8
 install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man8/netstat.8
 
@@ -90,8 +94,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc READ*.gz
-
+%doc *.gz
 %attr(755,root,root) /bin/*
 %attr(755,root,root) /sbin/arp
 %attr(755,root,root) /sbin/ifconfig
