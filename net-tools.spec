@@ -2,7 +2,7 @@ Summary:	Basic Networking Tools
 Summary(pl):	Podstawowe narzêdzia do obs³ugi i konfiguracji sieci
 Name:		net-tools
 Version:	1.60
-Release:	3
+Release:	4
 License:	GPL
 Group:		Networking/Admin
 Group(de):	Netzwerkwesen/Administration
@@ -15,6 +15,7 @@ Patch2:		%{name}-ipvs.patch
 URL:		http://www.tazenda.demon.co.uk/phil/net-tools/
 BuildRequires:	gettext-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+Conflicts:	sh-utils < 2.0.11-10
 
 %description
 This is a collection of the basic tools necessary for setting up
@@ -130,6 +131,8 @@ rm -rf $RPM_BUILD_ROOT
 %lang(id) %{_mandir}/id/man8/[^ps]*
 %lang(it) %{_mandir}/it/man[15]/*
 %lang(it) %{_mandir}/it/man8/[^ps]*
+%lang(ja) %{_mandir}/ja/man[15]/*
+%lang(ja) %{_mandir}/ja/man8/[^ps]*
 # No nl man[15]
 %lang(nl) %{_mandir}/nl/man8/[^ps]*
 %lang(pt) %{_mandir}/pt/man[15]/*
@@ -145,6 +148,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /sbin/slattach
 %lang(de) %{_mandir}/de/man8/slattach.8*
 %lang(fr) %{_mandir}/fr/man8/slattach.8*
+%lang(ja) %{_mandir}/ja/man8/slattach.8*
 %lang(pl) %{_mandir}/pl/man8/slattach.8*
 %{_mandir}/man8/slattach.8*
 
@@ -153,4 +157,5 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /sbin/plipconfig
 %lang(de) %{_mandir}/de/man8/plipconfig.8*
 %lang(fr) %{_mandir}/fr/man8/plipconfig.8*
+%lang(ja) %{_mandir}/ja/man8/plipconfig.8*
 %{_mandir}/man8/plipconfig.8*
