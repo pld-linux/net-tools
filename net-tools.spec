@@ -117,8 +117,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/rarp
 %attr(755,root,root) %{_sbindir}/route
 
+# No de man8
 %lang(de) %{_mandir}/de/man[15]/*
-%lang(de) %{_mandir}/de/man8/[^ps]*
 %lang(es) %{_mandir}/es/man[15]/*
 %lang(es) %{_mandir}/es/man8/[^ps]*
 %lang(fi) %{_mandir}/fi/man[15]/*
@@ -146,7 +146,6 @@ rm -rf $RPM_BUILD_ROOT
 %files -n slattach
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_sbindir}/slattach
-%lang(de) %{_mandir}/de/man8/slattach.8*
 %lang(fr) %{_mandir}/fr/man8/slattach.8*
 %lang(ja) %{_mandir}/ja/man8/slattach.8*
 %lang(pl) %{_mandir}/pl/man8/slattach.8*
@@ -155,7 +154,6 @@ rm -rf $RPM_BUILD_ROOT
 %files -n plipconfig
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_sbindir}/plipconfig
-%lang(de) %{_mandir}/de/man8/plipconfig.8*
 %lang(fr) %{_mandir}/fr/man8/plipconfig.8*
 %lang(ja) %{_mandir}/ja/man8/plipconfig.8*
 %{_mandir}/man8/plipconfig.8*
