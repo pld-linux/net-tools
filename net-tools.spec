@@ -5,7 +5,7 @@ Version:	1.52
 Release:	1
 Copyright:	GPL
 Group:		Networking/Admin
-Group(pl):	Sieci/Administracja
+Group(pl):	Sieciowe/Administracyjne
 Source0:	http://www.tazenda.demon.co.uk/phil/net-tools/%{name}-%{version}.tar.bz2
 Source1:	ifconfig.8.pl
 Source2:	netstat.8.pl
