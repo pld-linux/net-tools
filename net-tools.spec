@@ -18,6 +18,7 @@ Patch0:		%{name}-config.patch
 Patch1:		%{name}-man.patch
 Patch2:		%{name}-ipvs.patch
 Patch3:		%{name}-et.patch
+Patch4:		%{name}-no_multiline.patch
 URL:		http://www.tazenda.demon.co.uk/phil/net-tools/
 BuildRequires:	gettext-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -111,6 +112,7 @@ maszyny po³±czonej poprzez PLIP.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p0
+%patch4
 
 %build
 mv po/et_EE.po po/et.po
