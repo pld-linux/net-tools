@@ -7,7 +7,7 @@ Summary(ru):	Базовые сетевые программы
 Summary(uk):	Базов╕ програми мереж╕
 Name:		net-tools
 Version:	1.60
-Release:	15
+Release:	15.2
 License:	GPL
 Group:		Networking/Admin
 Source0:	http://www.tazenda.demon.co.uk/phil/net-tools/%{name}-%{version}.tar.bz2
@@ -139,6 +139,7 @@ mv po/et_EE.po po/et.po
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_sysconfdir}
 
 %{__make} install \
 	BASEDIR=$RPM_BUILD_ROOT \
@@ -156,6 +157,11 @@ mv -f $RPM_BUILD_ROOT%{_mandir}/{fr_FR,fr}
 # we can do it safely as no pt/pt_PT man pages appeared here yet
 mv $RPM_BUILD_ROOT%{_mandir}/{pt_BR,pt}
 
+cat > $RPM_BUILD_ROOT%{_sysconfdir}/mactab <<EOF
+# Each line here contains an interface name and a Ethernet MAC address. Like:
+#lan 00:13:d3:05:15:d2
+EOF
+
 %find_lang %{name}
 
 %clean
@@ -164,6 +170,7 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc READ*
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mactab
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_sbindir}/arp
 %attr(755,root,root) %{_sbindir}/ifconfig
