@@ -135,7 +135,10 @@ maszyny po³±czonej poprzez PLIP.
 mv po/et_EE.po po/et.po
 
 %build
-%{__make} COPTS="%{rpmcflags} -Wall" I18N=1
+%{__make} \
+	CC="%{__cc}" \
+	COPTS="%{rpmcflags} -Wall" \
+	I18N=1
 
 %install
 rm -rf $RPM_BUILD_ROOT
