@@ -35,6 +35,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_bindir		/bin
 %define		_sbindir	/sbin
 
+%define		specflags	-fno-strict-aliasing
+
 %description
 This is a collection of the basic tools necessary for setting up
 networking on a Linux machine. It includes ifconfig, route, netstat,
