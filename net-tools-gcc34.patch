@@ -42,3 +42,13 @@
      }
  }
  
+--- net-tools-1.60/lib/inet6_sr.c.orig	2006-05-03 11:58:01.000000000 +0200
++++ net-tools-1.60/lib/inet6_sr.c	2006-05-03 12:00:49.000000000 +0200
+@@ -33,6 +33,7 @@
+ #include "pathnames.h"
+ #include "intl.h"
+ #include "net-features.h"
++#include "util.h"
+ 
+ 
+ 
