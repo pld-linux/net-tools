@@ -7,7 +7,7 @@ Summary(ru):	Базовые сетевые программы
 Summary(uk):	Базов╕ програми мереж╕
 Name:		net-tools
 Version:	1.60
-Release:	15.2
+Release:	16
 License:	GPL
 Group:		Networking/Admin
 Source0:	http://www.tazenda.demon.co.uk/phil/net-tools/%{name}-%{version}.tar.bz2
@@ -28,6 +28,12 @@ Patch10:	%{name}-inet6-lookup.patch
 Patch11:	%{name}-ipx.patch
 Patch12:	%{name}-manydevs.patch
 Patch13:	%{name}-get_name.patch
+Patch14:	%{name}-arp_overflow.patch
+Patch15:	%{name}-virtualname.patch
+Patch16:	%{name}-cycle.patch
+Patch17:	%{name}-interface.patch
+Patch18:	%{name}-ifaceopt.patch
+Patch19:	%{name}-netstat-overflow.patch
 URL:		http://www.tazenda.demon.co.uk/phil/net-tools/
 BuildRequires:	gettext-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -133,6 +139,12 @@ maszyny poЁ╠czonej poprzez PLIP.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
+%patch19 -p1
 
 mv po/et_EE.po po/et.po
 
