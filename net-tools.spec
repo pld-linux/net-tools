@@ -89,7 +89,7 @@ ip ⁄ –¡À≈‘’ iproute2.
 Summary:	slattach - attach a network interface to a serial line
 Summary(pl):	slattach - do≥±cz interfejs sieciowy do lini szeregowej
 Group:		Networking/Admin
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description -n slattach
 Slattach is a tiny little program that can be used to put a normal
@@ -105,7 +105,7 @@ umoøliwia na po≥±czenia point-to-point z innym komputerem.
 Summary:	plipconfig - fine tune PLIP device parameters
 Summary(pl):	plipconfig - dostrajanie parametrÛw urz±dzenia PLIP
 Group:		Networking/Admin
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description -n plipconfig
 Plipconfig is used to (hopefully) improve PLIP performance by changing
@@ -165,6 +165,7 @@ install -d $RPM_BUILD_ROOT%{_sysconfdir}
 	I18N=1
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
+rm -f $RPM_BUILD_ROOT/usr/share/man/README.net-tools-non-english-man-pages
 
 # standardize localized man dirs
 mv -f $RPM_BUILD_ROOT%{_mandir}/{de_DE/man1/*,de/man1}
