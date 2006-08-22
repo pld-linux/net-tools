@@ -1,11 +1,17 @@
---- net-tools-1.60/include/mii.h.orig	2000-05-21 16:21:27.000000000 +0200
-+++ net-tools-1.60/include/mii.h	2004-03-08 11:45:47.073676856 +0100
-@@ -9,6 +9,8 @@
- #ifndef _LINUX_MII_H
- #define _LINUX_MII_H
+--- net-tools-1.60/include/mii.h.bar	Tue Jul 31 11:49:39 2001
++++ net-tools-1.60/include/mii.h	Tue Jul 31 11:49:33 2001
+@@ -11,11 +11,9 @@
  
-+#include <linux/sockios.h>
-+
  /* network interface ioctl's for MII commands */
  #ifndef SIOCGMIIPHY
- #define SIOCGMIIPHY (SIOCDEVPRIVATE)	/* Read from current PHY */
+-#define SIOCGMIIPHY (SIOCDEVPRIVATE)	/* Read from current PHY */
+-#define SIOCGMIIREG (SIOCDEVPRIVATE+1) 	/* Read any PHY register */
+-#define SIOCSMIIREG (SIOCDEVPRIVATE+2) 	/* Write any PHY register */
+-#define SIOCGPARAMS (SIOCDEVPRIVATE+3) 	/* Read operational parameters */
+-#define SIOCSPARAMS (SIOCDEVPRIVATE+4) 	/* Set operational parameters */
++#define SIOCGMIIPHY 0x8947 	/* Read from current PHY */
++#define SIOCGMIIREG 0x8948 	/* Read any PHY register */
++#define SIOCSMIIREG 0x8949 	/* Write any PHY register */
+ #endif
+ 
+ #include <linux/types.h>
