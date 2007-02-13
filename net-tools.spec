@@ -1,10 +1,10 @@
 Summary:	Basic Networking Tools
-Summary(es.UTF-8):   Herramientas básicas de Red
-Summary(ja.UTF-8):   ネットワークをセットアップするための基本的なツール
-Summary(pl.UTF-8):   Podstawowe narzędzia do obsługi i konfiguracji sieci
-Summary(pt_BR.UTF-8):   Ferramentas básicas de Rede
-Summary(ru.UTF-8):   Базовые сетевые программы
-Summary(uk.UTF-8):   Базові програми мережі
+Summary(es.UTF-8):	Herramientas básicas de Red
+Summary(ja.UTF-8):	ネットワークをセットアップするための基本的なツール
+Summary(pl.UTF-8):	Podstawowe narzędzia do obsługi i konfiguracji sieci
+Summary(pt_BR.UTF-8):	Ferramentas básicas de Rede
+Summary(ru.UTF-8):	Базовые сетевые программы
+Summary(uk.UTF-8):	Базові програми мережі
 Name:		net-tools
 Version:	1.60
 Release:	16
@@ -87,7 +87,7 @@ ip з пакету iproute2.
 
 %package -n slattach
 Summary:	slattach - attach a network interface to a serial line
-Summary(pl.UTF-8):   slattach - dołącz interfejs sieciowy do lini szeregowej
+Summary(pl.UTF-8):	slattach - dołącz interfejs sieciowy do lini szeregowej
 Group:		Networking/Admin
 Requires:	%{name} = %{version}-%{release}
 
@@ -103,7 +103,7 @@ umożliwia na połączenia point-to-point z innym komputerem.
 
 %package -n plipconfig
 Summary:	plipconfig - fine tune PLIP device parameters
-Summary(pl.UTF-8):   plipconfig - dostrajanie parametrów urządzenia PLIP
+Summary(pl.UTF-8):	plipconfig - dostrajanie parametrów urządzenia PLIP
 Group:		Networking/Admin
 Requires:	%{name} = %{version}-%{release}
 
