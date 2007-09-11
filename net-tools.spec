@@ -1,3 +1,5 @@
+# TODO
+# - check remaining patches
 Summary:	Basic Networking Tools
 Summary(es.UTF-8):	Herramientas básicas de Red
 Summary(ja.UTF-8):	ネットワークをセットアップするための基本的なツール
@@ -7,22 +9,21 @@ Summary(ru.UTF-8):	Базовые сетевые программы
 Summary(uk.UTF-8):	Базові програми мережі
 Name:		net-tools
 Version:	1.60
-Release:	18
+Release:	18.1
 License:	GPL
 Group:		Networking/Admin
 Source0:	http://download.berlios.de/net-tools/%{name}-%{version}.tar.bz2
 # Source0-md5:	888774accab40217dde927e21979c165
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	9cee6ac0a07a0bf34fbc71add1eb2ead
+Patch100:	%{name}-branch.diff
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-man.patch
 Patch2:		%{name}-ipvs.patch
 Patch3:		%{name}-et.patch
-
 Patch5:		%{name}-x25_address_is_struct.patch
 Patch6:		%{name}-make_config_h.patch
 Patch7:		%{name}-mii.patch
-Patch8:		%{name}-gcc34.patch
 Patch9:		%{name}-nameif.patch
 Patch10:	%{name}-inet6-lookup.patch
 Patch11:	%{name}-ipx.patch
@@ -34,7 +35,7 @@ Patch16:	%{name}-cycle.patch
 Patch17:	%{name}-interface.patch
 Patch18:	%{name}-ifaceopt.patch
 Patch19:	%{name}-netstat-overflow.patch
-Patch20:	%{name}-mii-tool-GigE.patch
+Patch20:	%{name}-netstat-stat.patch
 URL:		http://net-tools.berlios.de/
 BuildRequires:	gettext-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -126,31 +127,31 @@ maszyny połączonej poprzez PLIP.
 
 %prep
 %setup -q
-%patch20 -p2
+%patch100 -p1
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch5 -p1
+#%patch5 -p1
 %patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
+#%patch7 -p1
+#%patch9 -p1
+#%patch10 -p1
 %patch11 -p1
-%patch12 -p1
-%patch13 -p1
+#%patch12 -p1
+#%patch13 -p1
 %patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
+#%patch15 -p1
+#%patch16 -p1
+#%patch17 -p1
+#%patch18 -p1
 %patch19 -p1
+%patch20 -p1
 
 mv po/et_EE.po po/et.po
 
 %build
-%{__make} \
+%{__make} -j1 \
 	CC="%{__cc}" \
 	COPTS="%{rpmcflags} -Wall" \
 	I18N=1
@@ -159,7 +160,7 @@ mv po/et_EE.po po/et.po
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_sysconfdir}
 
-%{__make} install \
+%{__make} install -j1 \
 	BASEDIR=$RPM_BUILD_ROOT \
 	INSTALL="install" \
 	mandir=%{_mandir} \
