@@ -30,24 +30,26 @@ diff -u -r1.2 -r1.3
 +/* Last register we need for show_basic_mii() */
 +#define MII_BASIC_MAX          (MII_STAT1000+1)
 +
- #endif /* _NETTOOLS_MII_H */
+ #endif /* _LINUX_MII_H */
+===================================================================
 ===================================================================
 RCS file: /cvsroot/net-tools/net-tools/mii-tool.c,v
-retrieving revision 1.8
+retrieving revision 1.1
 retrieving revision 1.9
-diff -u -r1.8 -r1.9
---- net-tools/net-tools/mii-tool.c	2004/06/03 22:18:26	1.8
+diff -u -r1.1 -r1.9
+--- net-tools/net-tools/mii-tool.c	2000/05/21 13:44:36	1.1
 +++ net-tools/net-tools/mii-tool.c	2006/09/27 20:59:18	1.9
-@@ -29,7 +29,7 @@
+@@ -29,8 +29,7 @@
  	http://www.national.com/pf/DP/DP83840.html
  */
  
--static char version[] = "$Id$\n(Author: David Hinds based on Donald Becker's mii-diag)";
+-static char version[] =
+-"mii-tool.c 1.9 2000/04/28 00:56:08 (David Hinds)\n";
 +static char Version[] = "$Id$\n(Author: David Hinds based on Donald Becker's mii-diag)";
  
  #include <unistd.h>
  #include <stdlib.h>
-@@ -45,6 +45,8 @@
+@@ -46,16 +45,19 @@
  #include <sys/socket.h>
  #include <sys/ioctl.h>
  #include <net/if.h>
@@ -56,7 +58,10 @@ diff -u -r1.8 -r1.9
  #ifndef __GLIBC__
  #include <linux/if_arp.h>
  #include <linux/if_ether.h>
-@@ -55,7 +57,7 @@
+ #endif
+ #include "mii.h"
++#include "version.h"
+ 
  #define MAX_ETH		8		/* Maximum # of interfaces */
  
  /* Table of known MII's */
@@ -130,7 +135,8 @@ diff -u -r1.8 -r1.9
 +    s = strtok(arg, ", ");
 +    do {
  	    for (i = 0; i < NMEDIA; i++)
- 		if (s && strcasecmp(media[i].name, s) == 0) break;
+-		if (strcasecmp(media[i].name, s) == 0) break;
++		if (s && strcasecmp(media[i].name, s) == 0) break;
  	    if (i == NMEDIA) goto failed;
 -	    mask |= media[i].value;
 -	} while ((s = strtok(NULL, ", ")) != NULL);
@@ -176,7 +182,7 @@ diff -u -r1.8 -r1.9
      if (mask & (1<<5))
  	strcat(buf, " flow-control");
      return buf;
-@@ -201,14 +228,14 @@
+@@ -201,15 +228,15 @@
  {
      char buf[100];
      int i, mii_val[32];
@@ -189,11 +195,12 @@ diff -u -r1.8 -r1.9
 -    for (i = 0; i < ((verbose > 1) ? 32 : 8); i++)
 +    for (i = 0; i < ((verbose > 1) ? 32 : MII_BASIC_MAX); i++)
  	mii_val[i] = mdio_read(sock, i);
--    
-+
-     if (mii_val[MII_BMCR] == 0xffff  || mii_val[MII_BMSR] == 0x0000) {
+ 
+-    if (mii_val[MII_BMCR] == 0xffff) {
++    if (mii_val[MII_BMCR] == 0xffff  || mii_val[MII_BMSR] == 0x0000) {
  	fprintf(stderr, "  No MII transceiver present!.\n");
  	return -1;
+     }
 @@ -217,6 +244,7 @@
      /* Descriptive rename. */
      bmcr = mii_val[MII_BMCR]; bmsr = mii_val[MII_BMSR];
@@ -224,7 +231,7 @@ diff -u -r1.8 -r1.9
      }
      strcat(buf, (bmsr & MII_BMSR_LINK_VALID) ? "link ok" : "no link");
  
-@@ -296,10 +326,10 @@
+@@ -296,12 +326,13 @@
  	if (bmsr & MII_BMSR_REMOTE_FAULT)
  	    printf("remote fault, ");
  	printf((bmsr & MII_BMSR_LINK_VALID) ? "link ok" : "no link");
@@ -237,23 +244,43 @@ diff -u -r1.8 -r1.9
 +	    printf("\n  link partner:%s", media_list(lkpar, bmcr2, 0));
  	printf("\n");
      }
-     fflush(stdout);
-@@ -379,7 +409,8 @@
++    fflush(stdout);
+     return 0;
+ }
  
+@@ -329,7 +360,7 @@
+ 	printf("resetting the transceiver...\n");
+ 	mdio_write(skfd, MII_BMCR, MII_BMCR_RESET);
+     }
+-    if (nway_advertise) {
++    if (nway_advertise > 0) {
+ 	mdio_write(skfd, MII_ANAR, nway_advertise | 1);
+ 	opt_restart = 1;
+     }
+@@ -379,27 +410,38 @@
  /*--------------------------------------------------------------------*/
  
--const char *usage = "usage: %s [-VvRrwl] [-A media,... | -F media] [interface ...]\n"
-+const char *usage =
+ const char *usage =
+-"usage: %s [-VvRrwl] [-A media,... | -F media] [interface ...]
+-       -V, --version               display version information
+-       -v, --verbose               more verbose output
+-       -R, --reset                 reset MII to poweron state
+-       -r, --restart               restart autonegotiation
+-       -w, --watch                 monitor for link status changes
+-       -l, --log                   with -w, write events to syslog
+-       -A, --advertise=media,...   advertise only specified media
+-       -F, --force=media           force specified media technology
+-media: 100baseT4, 100baseTx-FD, 100baseTx-HD, 10baseT-FD, 10baseT-HD,
+-       (to advertise both HD and FD) 100baseTx, 10baseT\n";
 +"usage: %s [-VvRrwl] [-A media,... | -F media] [interface ...]\n"
- "       -V, --version               display version information\n"
- "       -v, --verbose               more verbose output\n"
- "       -R, --reset                 reset MII to poweron state\n"
-@@ -388,18 +419,29 @@
- "       -l, --log                   with -w, write events to syslog\n"
- "       -A, --advertise=media,...   advertise only specified media\n"
- "       -F, --force=media           force specified media technology\n"
--"media: 100baseT4, 100baseTx-FD, 100baseTx-HD, 10baseT-FD, 10baseT-HD,\n"
--"       (to advertise both HD and FD) 100baseTx, 10baseT\n";
++"       -V, --version               display version information\n"
++"       -v, --verbose               more verbose output\n"
++"       -R, --reset                 reset MII to poweron state\n"
++"       -r, --restart               restart autonegotiation\n"
++"       -w, --watch                 monitor for link status changes\n"
++"       -l, --log                   with -w, write events to syslog\n"
++"       -A, --advertise=media,...   advertise only specified media\n"
++"       -F, --force=media           force specified media technology\n"
 +"media: 1000baseTx-HD, 1000baseTx-FD,\n"
 +"       100baseT4, 100baseTx-FD, 100baseTx-HD,\n"
 +"       10baseT-FD, 10baseT-HD,\n"
@@ -282,20 +309,33 @@ diff -u -r1.8 -r1.9
  	case 'p': override_phy = atoi(optarg); break;
  	case 'r': opt_restart++;	break;
  	case 'R': opt_reset++;		break;
-@@ -422,14 +464,14 @@
+@@ -411,6 +453,10 @@
+ 	}
+     /* Check for a few inappropriate option combinations */
+     if (opt_watch) verbose = 0;
++
++    if ((nway_advertise < 0) || (fixed_speed < 0))
++    	return 2;
++
+     if (errflag || (fixed_speed & (fixed_speed-1)) ||
+ 	(fixed_speed && (opt_restart || nway_advertise))) {
+ 	fprintf(stderr, usage, argv[0]);
+@@ -418,7 +464,7 @@
      }
  
      if (opt_version)
--	printf("%s\n%s\n", version, RELEASE);
+-	printf(version);
 +	version();
  
      /* Open a basic socket. */
      if ((skfd = socket(AF_INET, SOCK_DGRAM,0)) < 0) {
- 	perror("socket");
+@@ -426,6 +472,9 @@
  	exit(-1);
      }
--    
-+
-     if (verbose > 1)
-     	printf("Using SIOCGMIIPHY=0x%x\n", SIOCGMIIPHY);	
  
++    if (verbose > 1)
++    	printf("Using SIOCGMIIPHY=0x%x\n", SIOCGMIIPHY);	
++
+     /* No remaining args means show all interfaces. */
+     if (optind == argc) {
+ 	ret = 1;
