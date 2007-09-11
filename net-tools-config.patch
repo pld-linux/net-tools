@@ -76,19 +76,6 @@ diff -Nru net-tools-1.56/config.h net-tools-1.56.new/config.h
 +#define HAVE_FW_MASQUERADE 1
 +#define HAVE_IP_TOOLS 0
 +#define HAVE_MII 1
-diff -Nru net-tools-1.56/config.in net-tools-1.56.new/config.in
---- net-tools-1.56/config.in	Sun May 21 16:32:12 2000
-+++ net-tools-1.56.new/config.in	Tue May 30 03:16:39 2000
-@@ -86,6 +86,6 @@
- *
- *           Other Features.
- *
--bool 'IP Masquerading support' HAVE_FW_MASQUERADE n
--bool 'Build iptunnel and ipmaddr' HAVE_IP_TOOLS n
--bool 'Build mii-tool' HAVE_MII n
-+bool 'IP Masquerading support' HAVE_FW_MASQUERADE y
-+bool 'Build iptunnel and ipmaddr' HAVE_IP_TOOLS y
-+bool 'Build mii-tool' HAVE_MII y
 diff -Nru net-tools-1.56/config.make net-tools-1.56.new/config.make
 --- net-tools-1.56/config.make	Thu Jan  1 01:00:00 1970
 +++ net-tools-1.56.new/config.make	Tue May 30 03:19:19 2000
