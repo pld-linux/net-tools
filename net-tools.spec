@@ -189,7 +189,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc READ*
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mactab
-%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_bindir}/hostname
+%attr(755,root,root) %{_bindir}/netstat
 %attr(755,root,root) %{_sbindir}/arp
 %attr(755,root,root) %{_sbindir}/ifconfig
 %attr(755,root,root) %{_sbindir}/mii-tool
