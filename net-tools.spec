@@ -10,7 +10,7 @@ Version:	1.60
 Release:	17
 License:	GPL
 Group:		Networking/Admin
-Source0:	http://www.tazenda.demon.co.uk/phil/net-tools/%{name}-%{version}.tar.bz2
+Source0:	http://download.berlios.de/net-tools/%{name}-%{version}.tar.bz2
 # Source0-md5:	888774accab40217dde927e21979c165
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	9cee6ac0a07a0bf34fbc71add1eb2ead
@@ -34,7 +34,7 @@ Patch16:	%{name}-cycle.patch
 Patch17:	%{name}-interface.patch
 Patch18:	%{name}-ifaceopt.patch
 Patch19:	%{name}-netstat-overflow.patch
-URL:		http://www.tazenda.demon.co.uk/phil/net-tools/
+URL:		http://net-tools.berlios.de/
 BuildRequires:	gettext-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -165,7 +165,7 @@ install -d $RPM_BUILD_ROOT%{_sysconfdir}
 	I18N=1
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
-rm -f $RPM_BUILD_ROOT/usr/share/man/README.net-tools-non-english-man-pages
+rm -f $RPM_BUILD_ROOT%{_mandir}/README.net-tools-non-english-man-pages
 
 # standardize localized man dirs
 mv -f $RPM_BUILD_ROOT%{_mandir}/{de_DE/man1/*,de/man1}
