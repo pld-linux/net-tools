@@ -7,7 +7,7 @@ Summary(ru.UTF-8):	Базовые сетевые программы
 Summary(uk.UTF-8):	Базові програми мережі
 Name:		net-tools
 Version:	1.60
-Release:	17
+Release:	19
 License:	GPL
 Group:		Networking/Admin
 Source0:	http://download.berlios.de/net-tools/%{name}-%{version}.tar.bz2
@@ -18,7 +18,7 @@ Patch0:		%{name}-config.patch
 Patch1:		%{name}-man.patch
 Patch2:		%{name}-ipvs.patch
 Patch3:		%{name}-et.patch
-Patch4:		%{name}-no_multiline.patch
+
 Patch5:		%{name}-x25_address_is_struct.patch
 Patch6:		%{name}-make_config_h.patch
 Patch7:		%{name}-mii.patch
@@ -34,6 +34,7 @@ Patch16:	%{name}-cycle.patch
 Patch17:	%{name}-interface.patch
 Patch18:	%{name}-ifaceopt.patch
 Patch19:	%{name}-netstat-overflow.patch
+Patch20:	%{name}-mii-tool-GigE.patch
 URL:		http://net-tools.berlios.de/
 BuildRequires:	gettext-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -125,11 +126,11 @@ maszyny połączonej poprzez PLIP.
 
 %prep
 %setup -q
+%patch20 -p2
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
@@ -189,8 +190,12 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc READ*
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mactab
+%attr(755,root,root) %{_bindir}/dnsdomainname
+%attr(755,root,root) %{_bindir}/domainname
 %attr(755,root,root) %{_bindir}/hostname
 %attr(755,root,root) %{_bindir}/netstat
+%attr(755,root,root) %{_bindir}/nisdomainname
+%attr(755,root,root) %{_bindir}/ypdomainname
 %attr(755,root,root) %{_sbindir}/arp
 %attr(755,root,root) %{_sbindir}/ifconfig
 %attr(755,root,root) %{_sbindir}/mii-tool
