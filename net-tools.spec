@@ -7,7 +7,7 @@ Summary(ru.UTF-8):	Базовые сетевые программы
 Summary(uk.UTF-8):	Базові програми мережі
 Name:		net-tools
 Version:	1.60
-Release:	18
+Release:	19
 License:	GPL
 Group:		Networking/Admin
 Source0:	http://download.berlios.de/net-tools/%{name}-%{version}.tar.bz2
@@ -190,8 +190,12 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc READ*
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mactab
+%attr(755,root,root) %{_bindir}/dnsdomainname
+%attr(755,root,root) %{_bindir}/domainname
 %attr(755,root,root) %{_bindir}/hostname
 %attr(755,root,root) %{_bindir}/netstat
+%attr(755,root,root) %{_bindir}/nisdomainname
+%attr(755,root,root) %{_bindir}/ypdomainname
 %attr(755,root,root) %{_sbindir}/arp
 %attr(755,root,root) %{_sbindir}/ifconfig
 %attr(755,root,root) %{_sbindir}/mii-tool
