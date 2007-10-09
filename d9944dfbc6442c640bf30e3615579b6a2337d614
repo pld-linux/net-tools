@@ -1,0 +1,7 @@
+- release 5,
+- recompile in curent build environment (seems on some systems netstat
+  sometimes segfaults),
+- merged rawhide patches:
+-- bug9215: MTU (and other) option(s) not parsed correctly,
+-- bug9129: allow more granularity iwth --numeric,
+- some modyfications for using new rpm automation.
