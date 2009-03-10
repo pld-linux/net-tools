@@ -1,0 +1,241 @@
+- from http://www.ducksong.com/misc/netstat-netlink-diag-patch.txt
+
+Index: netstat.c
+===================================================================
+RCS file: /cvsroot/net-tools/net-tools/netstat.c,v
+retrieving revision 1.55
+diff -c -d -u -r1.55 netstat.c
+--- netstat.c	1 Dec 2007 19:00:40 -0000	1.55
++++ netstat.c	20 Feb 2008 23:04:29 -0000
+@@ -96,6 +96,13 @@
+ #include "util.h"
+ #include "proc.h"
+ 
++#ifdef HAVE_NETLINK
++#include <asm/types.h>
++#include <linux/netlink.h>
++#include <linux/inet_diag.h>
++#endif
++
++
+ #define PROGNAME_WIDTH 20
+ 
+ #if !defined(s6_addr32) && defined(in6a_words)
+@@ -828,11 +835,194 @@
+     }
+ }
+ 
++
++
++#ifdef HAVE_NETLINK
++int tcp_netlink()
++{
++  /* a newer alternative to /proc/net/tcp[6] - using NETLINK DIAG
++     runs much faster with large number of entries
++     essentially just a bridge - converts from DIAG to /proc/net/tcp format
++     largely taken directly from ss of iproute package
++     
++     returns -1 if NETLINK isn't available, in which case the old /proc/net/tcp code is run
++  */
++
++  int fd;
++  struct sockaddr_nl nladdr;
++  struct {
++    struct nlmsghdr nlh;
++    struct inet_diag_req r;
++  } req;
++  struct msghdr msg;
++  char	buf[8192];
++  char linebuf[8192];
++  struct iovec iov;
++  int lnr = 0;
++  struct inet_diag_msg *r;
++  int rv = 0;
++  
++  if ((fd = socket(AF_NETLINK, SOCK_RAW, NETLINK_INET_DIAG)) < 0)
++    return -1;
++  
++  memset(&nladdr, 0, sizeof(nladdr));
++  nladdr.nl_family = AF_NETLINK;
++  
++  req.nlh.nlmsg_len = sizeof(req);
++  req.nlh.nlmsg_type = TCPDIAG_GETSOCK;
++  req.nlh.nlmsg_flags = NLM_F_ROOT|NLM_F_MATCH|NLM_F_REQUEST;
++  req.nlh.nlmsg_pid = 0;
++  req.nlh.nlmsg_seq = 123456;
++  memset(&req.r, 0, sizeof(req.r));
++  req.r.idiag_family = AF_INET;
++  req.r.idiag_states = 0xfff;
++  req.r.idiag_ext = 0;
++
++  iov.iov_base = &req;
++  iov.iov_len = sizeof(req);
++  
++  msg = (struct msghdr) {
++    .msg_name = (void*)&nladdr,
++    .msg_namelen = sizeof(nladdr),
++    .msg_iov = &iov,
++    .msg_iovlen = 1,
++  };
++  
++  if (sendmsg(fd, &msg, 0) < 0)
++    {
++      rv = -1;
++      goto netlink_done;
++    }
++  
++  iov.iov_base = buf;
++  iov.iov_len = sizeof(buf);
++  
++  while (1) 
++    {
++      int status;
++      struct nlmsghdr *h;
++      
++      msg = (struct msghdr) {
++	(void*)&nladdr, sizeof(nladdr),
++	&iov,	1,
++	NULL,	0,
++	0
++      };
++      
++      status = recvmsg(fd, &msg, 0);
++      
++      if (status < 0) 
++	{
++	  if (errno == EINTR)
++	    continue;
++	  rv = -2;
++	  goto netlink_done;
++	}
++      
++      if (status == 0) 
++	{
++	  rv = 0;
++	  goto netlink_done;
++	}
++    
++
++      h = (struct nlmsghdr*)buf;
++      while (NLMSG_OK(h, status)) 
++	{
++	  if (h->nlmsg_seq == 123456)		  
++	    {
++	      if (h->nlmsg_type == NLMSG_DONE)
++		{
++		  rv = 0;
++		  goto netlink_done;
++		}
++	      
++	      if (h->nlmsg_type == NLMSG_ERROR) 
++		{
++		  rv = -2;
++		  goto netlink_done;
++		}
++	      
++	      r = NLMSG_DATA(h);
++	  
++	      if (r->idiag_family == AF_INET)
++		{
++		  snprintf (linebuf,8192,
++			    "%4d: %08X:%04X %08X:%04X %02X %08X:%08X %02X:%08X %08X %5d %8d %d",
++			    lnr, 
++			    r->id.idiag_src[0],
++			    ntohs(r->id.idiag_sport),
++			    r->id.idiag_dst[0],
++			    ntohs(r->id.idiag_dport),
++			    r->idiag_state,
++			    r->idiag_wqueue, r->idiag_rqueue,
++			    r->idiag_timer, 
++			    r->idiag_expires/10, // (diag reports as miliseconds, /proc interface stuck at centiseconds)
++			    r->idiag_retrans,
++			    r->idiag_uid,
++			    r->idiag_retrans,
++			    r->idiag_inode);
++		}
++	      else
++		{					  /* ipv6 */
++		  snprintf (linebuf,8192,
++			    "%4d: %08X%08X%08X%08X:%04X %08X%08X%08X%08X:%04X %02X %08X:%08X %02X:%08X %08X %5d %8d %d",
++			    lnr, 
++			    r->id.idiag_src[0],
++			    r->id.idiag_src[1],
++			    r->id.idiag_src[2],
++			    r->id.idiag_src[3],
++			    ntohs(r->id.idiag_sport),
++			    r->id.idiag_dst[0],
++			    r->id.idiag_dst[1],
++			    r->id.idiag_dst[2],
++			    r->id.idiag_dst[3],
++			    ntohs(r->id.idiag_dport),
++			    r->idiag_state,
++			    r->idiag_wqueue, r->idiag_rqueue,
++			    r->idiag_timer, 
++			    r->idiag_expires/10, // (diag reports as miliseconds, /proc interface stuck at centiseconds)
++			    r->idiag_retrans,
++			    r->idiag_uid,
++			    r->idiag_retrans,
++			    r->idiag_inode);
++		}
++	      
++	      tcp_do_one (++lnr, linebuf);
++	    }
++	  h = NLMSG_NEXT(h, status);
++	}
++    }
++  
++  
++ netlink_done:
++  if (fd >= 0)
++    close (fd);
++  return rv;
++}
++#endif
++
++
+ static int tcp_info(void)
+ {
+-    INFO_GUTS6(_PATH_PROCNET_TCP, _PATH_PROCNET_TCP6, "AF INET (tcp)",
+-	       tcp_do_one);
++  int rv = -1;
++  
++#ifdef HAVE_NETLINK
++  rv = tcp_netlink();
++#endif
++
++  if (rv == -1)
++    {
++      // netlink is not available - so parse /proc/net/tcp
++      INFO_GUTS6(_PATH_PROCNET_TCP, _PATH_PROCNET_TCP6, "AF INET (tcp)",
++		 tcp_do_one);   
++    }
++  else if (rv == 0) 
++    return 0;
++  
++  return -1;
+ }
++ 
+ 
+ static void udp_do_one(int lnr, const char *line)
+ {
+--- config.in~	2009-03-10 04:37:40.000000000 +0200
++++ config.in	2009-03-10 04:38:14.092903210 +0200
+@@ -89,3 +89,4 @@
+ bool 'IP Masquerading support' HAVE_FW_MASQUERADE n
+ bool 'Build iptunnel and ipmaddr' HAVE_IP_TOOLS n
+ bool 'Build mii-tool' HAVE_MII n
++bool 'Use Netlink Diag' HAVE_NETLINK y
+--- config.h~	2009-03-10 04:49:18.000000000 +0200
++++ config.h	2009-03-10 04:49:55.762832175 +0200
+@@ -72,3 +72,4 @@
+ #define HAVE_FW_MASQUERADE 1
+ #define HAVE_IP_TOOLS 0
+ #define HAVE_MII 1
++#define HAVE_NETLINK 1
+--- config.make~	2009-03-10 04:49:18.000000000 +0200
++++ config.make	2009-03-10 04:50:19.880072014 +0200
+@@ -33,3 +33,4 @@
+ # HAVE_FW_MASQUERADE=1
+ # HAVE_IP_TOOLS=0
+ HAVE_MII=1
++HAVE_NETLINK=1
