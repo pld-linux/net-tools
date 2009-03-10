@@ -1,3 +1,5 @@
+# TODO
+# - changing config.in is not sufficent, must patch config.h and config.make manually
 Summary:	Basic Networking Tools
 Summary(es.UTF-8):	Herramientas básicas de Red
 Summary(ja.UTF-8):	ネットワークをセットアップするための基本的なツール
@@ -7,7 +9,7 @@ Summary(ru.UTF-8):	Базовые сетевые программы
 Summary(uk.UTF-8):	Базові програми мережі
 Name:		net-tools
 Version:	1.60
-Release:	27
+Release:	28
 License:	GPL
 Group:		Networking/Admin
 Source0:	http://download.berlios.de/net-tools/%{name}-%{version}.tar.bz2
@@ -18,7 +20,7 @@ Patch0:		%{name}-config.patch
 Patch1:		%{name}-man.patch
 Patch2:		%{name}-ipvs.patch
 Patch3:		%{name}-et.patch
-
+Patch4:		%{name}-mii-tool-GigE.patch
 Patch5:		%{name}-x25_address_is_struct.patch
 Patch6:		%{name}-make_config_h.patch
 Patch7:		%{name}-mii.patch
@@ -34,7 +36,7 @@ Patch16:	%{name}-cycle.patch
 Patch17:	%{name}-interface.patch
 Patch18:	%{name}-ifaceopt.patch
 Patch19:	%{name}-netstat-overflow.patch
-Patch20:	%{name}-mii-tool-GigE.patch
+Patch20:	%{name}-netstat-netlink-diag.patch
 URL:		http://net-tools.berlios.de/
 BuildRequires:	gettext-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -126,11 +128,11 @@ maszyny połączonej poprzez PLIP.
 
 %prep
 %setup -q
-%patch20 -p2
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p2
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
@@ -146,11 +148,12 @@ maszyny połączonej poprzez PLIP.
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
+%patch20 -p0
 
 mv po/et_EE.po po/et.po
 
 %build
-%{__make} \
+%{__make} -j1 \
 	CC="%{__cc}" \
 	COPTS="%{rpmcflags} -Wall" \
 	I18N=1
