@@ -9,7 +9,7 @@ Summary(ru.UTF-8):	Базовые сетевые программы
 Summary(uk.UTF-8):	Базові програми мережі
 Name:		net-tools
 Version:	1.60
-Release:	29
+Release:	30
 License:	GPL
 Group:		Networking/Admin
 Source0:	http://download.berlios.de/net-tools/%{name}-%{version}.tar.bz2
@@ -37,6 +37,7 @@ Patch17:	%{name}-interface.patch
 Patch18:	%{name}-ifaceopt.patch
 Patch19:	%{name}-netstat-overflow.patch
 Patch20:	%{name}-netstat-netlink-diag.patch
+Patch21:	%{name}-statistics_buffer.patch
 URL:		http://net-tools.berlios.de/
 BuildRequires:	gettext-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -149,6 +150,7 @@ maszyny połączonej poprzez PLIP.
 %patch18 -p1
 %patch19 -p1
 %patch20 -p0
+%patch21 -p1
 
 mv po/et_EE.po po/et.po
 

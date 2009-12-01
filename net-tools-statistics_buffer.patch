@@ -1,0 +1,12 @@
+diff -up net-tools-1.60/statistics.c.old net-tools-1.60/statistics.c
+--- net-tools-1.60/statistics.c.old	2008-03-04 10:44:41.000000000 +0100
++++ net-tools-1.60/statistics.c	2008-03-04 10:44:11.000000000 +0100
+@@ -352,7 +352,7 @@ struct tabtab *newtable(struct tabtab *t
+ 
+ void process_fd(FILE *f,int file_desc)   // added file_desc to show propriate error mesg
+ {
+-    char buf1[1024], buf2[1024];
++    char buf1[2048], buf2[2048];
+     char *sp, *np, *p;
+     while (fgets(buf1, sizeof buf1, f)) {
+ 	int endflag;
