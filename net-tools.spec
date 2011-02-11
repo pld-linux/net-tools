@@ -9,7 +9,7 @@ Summary(ru.UTF-8):	Базовые сетевые программы
 Summary(uk.UTF-8):	Базові програми мережі
 Name:		net-tools
 Version:	1.60
-Release:	30
+Release:	32
 License:	GPL
 Group:		Networking/Admin
 Source0:	http://download.berlios.de/net-tools/%{name}-%{version}.tar.bz2
@@ -40,6 +40,7 @@ Patch20:	%{name}-netstat-netlink-diag.patch
 Patch21:	%{name}-statistics_buffer.patch
 URL:		http://net-tools.berlios.de/
 BuildRequires:	gettext-devel
+Requires:	hostname
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_bindir		/bin
@@ -157,7 +158,7 @@ mv po/et_EE.po po/et.po
 %build
 %{__make} -j1 \
 	CC="%{__cc}" \
-	COPTS="%{rpmcflags} -Wall" \
+	COPTS="%{rpmcppflags} %{rpmcflags} -Wall" \
 	I18N=1
 
 %install
@@ -180,6 +181,18 @@ mv -f $RPM_BUILD_ROOT%{_mandir}/{de_DE/*,de}
 mv -f $RPM_BUILD_ROOT%{_mandir}/{fr_FR,fr}
 # we can do it safely as no pt/pt_PT man pages appeared here yet
 mv $RPM_BUILD_ROOT%{_mandir}/{pt_BR,pt}
+
+ #remove hostname (has its own package)
+rm $RPM_BUILD_ROOT/bin/dnsdomainname
+rm $RPM_BUILD_ROOT%{_mandir}/{,*/}man*/dnsdomainname*
+rm $RPM_BUILD_ROOT/bin/domainname
+rm $RPM_BUILD_ROOT%{_mandir}/{,*/}man*/domainname*
+rm $RPM_BUILD_ROOT/bin/hostname
+rm $RPM_BUILD_ROOT%{_mandir}/{,*/}man*/hostname*
+rm $RPM_BUILD_ROOT/bin/nisdomainname
+rm $RPM_BUILD_ROOT%{_mandir}/{,*/}man*/nisdomainname*
+rm $RPM_BUILD_ROOT/bin/ypdomainname
+rm $RPM_BUILD_ROOT%{_mandir}/{,*/}man*/ypdomainname*
 
 cat > $RPM_BUILD_ROOT%{_sysconfdir}/mactab <<EOF
 # Each line here contains an interface name and a Ethernet MAC address. Like:
@@ -207,23 +220,23 @@ rm -rf $RPM_BUILD_ROOT
 %lang(de) %{_mandir}/de/man8/[!ps]*
 %lang(es) %{_mandir}/es/man[15]/*
 %lang(es) %{_mandir}/es/man8/[!ps]*
-%lang(fi) %{_mandir}/fi/man[15]/*
+#%lang(fi) %{_mandir}/fi/man[15]/*
 # No fi man8
 %lang(fr) %{_mandir}/fr/man[15]/*
 %lang(fr) %{_mandir}/fr/man8/[!ps]*
-%lang(hu) %{_mandir}/hu/man[15]/*
+#%lang(hu) %{_mandir}/hu/man[15]/*
 %lang(hu) %{_mandir}/hu/man8/[!ps]*
-%lang(id) %{_mandir}/id/man[15]/*
+#%lang(id) %{_mandir}/id/man[15]/*
 %lang(id) %{_mandir}/id/man8/[!ps]*
-%lang(it) %{_mandir}/it/man[15]/*
+#%lang(it) %{_mandir}/it/man[15]/*
 %lang(it) %{_mandir}/it/man8/[!ps]*
 %lang(ja) %{_mandir}/ja/man[15]/*
 %lang(ja) %{_mandir}/ja/man8/[!ps]*
 # No nl man[15]
 %lang(nl) %{_mandir}/nl/man8/[!ps]*
-%lang(pt) %{_mandir}/pt/man[15]/*
+#%lang(pt) %{_mandir}/pt/man[15]/*
 %lang(pt) %{_mandir}/pt/man8/[!ps]*
-%lang(pl) %{_mandir}/pl/man[15]/*
+#%lang(pl) %{_mandir}/pl/man[15]/*
 %lang(pl) %{_mandir}/pl/man8/[!ps]*
 
 %{_mandir}/man[15]/*
