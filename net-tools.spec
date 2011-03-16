@@ -10,7 +10,7 @@ Summary(uk.UTF-8):	Базові програми мережі
 Name:		net-tools
 Version:	1.60
 Release:	32
-License:	GPL
+License:	GPL v2+
 Group:		Networking/Admin
 Source0:	http://download.berlios.de/net-tools/%{name}-%{version}.tar.bz2
 # Source0-md5:	888774accab40217dde927e21979c165
@@ -92,7 +92,7 @@ ip з пакету iproute2.
 
 %package -n slattach
 Summary:	slattach - attach a network interface to a serial line
-Summary(pl.UTF-8):	slattach - dołącz interfejs sieciowy do lini szeregowej
+Summary(pl.UTF-8):	slattach - dołączanie interfejsu sieciowego do linii szeregowej
 Group:		Networking/Admin
 Requires:	%{name} = %{version}-%{release}
 
@@ -103,8 +103,8 @@ allowing you to use it for point-to-point links to other computers.
 
 %description -n slattach -l pl.UTF-8
 Slattach jest prostym programem, który umożliwia zamianę zwykłej linii
-terminala ("szeregowej") w jeden z kilku trybów "sieciowych" przez co
-umożliwia na połączenia point-to-point z innym komputerem.
+terminala ("szeregowej") w jeden z kilku trybów "sieciowych", co
+pozwala na połączenia point-to-point z innym komputerem.
 
 %package -n plipconfig
 Summary:	plipconfig - fine tune PLIP device parameters
@@ -172,7 +172,7 @@ install -d $RPM_BUILD_ROOT%{_sysconfdir}
 	I18N=1
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
-rm -f $RPM_BUILD_ROOT%{_mandir}/README.net-tools-non-english-man-pages
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/README.net-tools-non-english-man-pages
 
 # standardize localized man dirs
 mv -f $RPM_BUILD_ROOT%{_mandir}/{de_DE/man1/*,de/man1}
@@ -182,17 +182,17 @@ mv -f $RPM_BUILD_ROOT%{_mandir}/{fr_FR,fr}
 # we can do it safely as no pt/pt_PT man pages appeared here yet
 mv $RPM_BUILD_ROOT%{_mandir}/{pt_BR,pt}
 
- #remove hostname (has its own package)
-rm $RPM_BUILD_ROOT/bin/dnsdomainname
-rm $RPM_BUILD_ROOT%{_mandir}/{,*/}man*/dnsdomainname*
-rm $RPM_BUILD_ROOT/bin/domainname
-rm $RPM_BUILD_ROOT%{_mandir}/{,*/}man*/domainname*
-rm $RPM_BUILD_ROOT/bin/hostname
-rm $RPM_BUILD_ROOT%{_mandir}/{,*/}man*/hostname*
-rm $RPM_BUILD_ROOT/bin/nisdomainname
-rm $RPM_BUILD_ROOT%{_mandir}/{,*/}man*/nisdomainname*
-rm $RPM_BUILD_ROOT/bin/ypdomainname
-rm $RPM_BUILD_ROOT%{_mandir}/{,*/}man*/ypdomainname*
+# remove hostname (has its own package)
+%{__rm} $RPM_BUILD_ROOT/bin/dnsdomainname
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man1/dnsdomainname*
+%{__rm} $RPM_BUILD_ROOT/bin/domainname
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man1/domainname*
+%{__rm} $RPM_BUILD_ROOT/bin/hostname
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man1/hostname*
+%{__rm} $RPM_BUILD_ROOT/bin/nisdomainname
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man1/nisdomainname*
+%{__rm} $RPM_BUILD_ROOT/bin/ypdomainname
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man1/ypdomainname*
 
 cat > $RPM_BUILD_ROOT%{_sysconfdir}/mactab <<EOF
 # Each line here contains an interface name and a Ethernet MAC address. Like:
@@ -206,9 +206,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc READ*
+%doc README README.ipv6 TODO
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mactab
-%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_bindir}/netstat
 %attr(755,root,root) %{_sbindir}/arp
 %attr(755,root,root) %{_sbindir}/ifconfig
 %attr(755,root,root) %{_sbindir}/mii-tool
@@ -216,31 +216,28 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/route
 %attr(755,root,root) %{_sbindir}/nameif
 
-%lang(de) %{_mandir}/de/man[15]/*
+%lang(de) %{_mandir}/de/man5/ethers.5*
 %lang(de) %{_mandir}/de/man8/[!ps]*
-%lang(es) %{_mandir}/es/man[15]/*
+%lang(es) %{_mandir}/es/man5/ethers.5*
 %lang(es) %{_mandir}/es/man8/[!ps]*
-#%lang(fi) %{_mandir}/fi/man[15]/*
-# No fi man8
-%lang(fr) %{_mandir}/fr/man[15]/*
+%lang(fr) %{_mandir}/fr/man5/ethers.5*
 %lang(fr) %{_mandir}/fr/man8/[!ps]*
-#%lang(hu) %{_mandir}/hu/man[15]/*
 %lang(hu) %{_mandir}/hu/man8/[!ps]*
-#%lang(id) %{_mandir}/id/man[15]/*
 %lang(id) %{_mandir}/id/man8/[!ps]*
-#%lang(it) %{_mandir}/it/man[15]/*
 %lang(it) %{_mandir}/it/man8/[!ps]*
-%lang(ja) %{_mandir}/ja/man[15]/*
+%lang(ja) %{_mandir}/ja/man5/ethers.5*
 %lang(ja) %{_mandir}/ja/man8/[!ps]*
-# No nl man[15]
 %lang(nl) %{_mandir}/nl/man8/[!ps]*
-#%lang(pt) %{_mandir}/pt/man[15]/*
 %lang(pt) %{_mandir}/pt/man8/[!ps]*
-#%lang(pl) %{_mandir}/pl/man[15]/*
 %lang(pl) %{_mandir}/pl/man8/[!ps]*
-
-%{_mandir}/man[15]/*
-%{_mandir}/man8/[!ps]*
+%{_mandir}/man5/ethers.5*
+%{_mandir}/man8/arp.8*
+%{_mandir}/man8/ifconfig.8*
+%{_mandir}/man8/mii-tool.8*
+%{_mandir}/man8/nameif.8*
+%{_mandir}/man8/netstat.8*
+%{_mandir}/man8/rarp.8*
+%{_mandir}/man8/route.8*
 
 %files -n slattach
 %defattr(644,root,root,755)
