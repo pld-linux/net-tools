@@ -9,7 +9,7 @@ Summary(ru.UTF-8):	Базовые сетевые программы
 Summary(uk.UTF-8):	Базові програми мережі
 Name:		net-tools
 Version:	1.60
-Release:	32
+Release:	33
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	http://download.berlios.de/net-tools/%{name}-%{version}.tar.bz2
@@ -167,7 +167,7 @@ install -d $RPM_BUILD_ROOT%{_sysconfdir}
 
 %{__make} install \
 	BASEDIR=$RPM_BUILD_ROOT \
-	INSTALL="install" \
+	INSTALL="install -p" \
 	mandir=%{_mandir} \
 	I18N=1
 
