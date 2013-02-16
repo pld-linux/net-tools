@@ -1,0 +1,24 @@
+--- net-tools-1.60/lib/tr.c~	2000-02-20 22:46:45.000000000 +0100
++++ net-tools-1.60/lib/tr.c	2013-02-16 22:38:06.260052375 +0100
+@@ -20,7 +20,7 @@
+ #include <sys/types.h>
+ #include <sys/socket.h>
+ #include <net/if_arp.h>
+-#include <linux/if_tr.h>
++#include <linux/if_fddi.h>
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <errno.h>
+--- net-tools-1.60/lib/tr.c~	2013-02-16 22:39:03.864803754 +0100
++++ net-tools-1.60/lib/tr.c	2013-02-16 22:40:02.122803924 +0100
+@@ -31,6 +31,10 @@
+ #include "pathnames.h"
+ #include "intl.h"
+ 
++#ifndef TR_ALEN
++#define TR_ALEN FDDI_K_ALEN
++#endif
++
+ extern struct hwtype tr_hwtype;
+ 
+ static char *pr_tr(unsigned char *ptr)

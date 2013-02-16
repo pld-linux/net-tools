@@ -38,6 +38,8 @@ Patch18:	%{name}-ifaceopt.patch
 Patch19:	%{name}-netstat-overflow.patch
 Patch20:	%{name}-netstat-netlink-diag.patch
 Patch21:	%{name}-statistics_buffer.patch
+Patch22:	%{name}-tr.patch
+Patch23:	%{name}-Werror.patch
 URL:		http://net-tools.berlios.de/
 BuildRequires:	gettext-devel
 Requires:	hostname
@@ -152,6 +154,8 @@ maszyny połączonej poprzez PLIP.
 %patch19 -p1
 %patch20 -p0
 %patch21 -p1
+%patch22 -p1
+%patch23 -p1
 
 mv po/et_EE.po po/et.po
 
