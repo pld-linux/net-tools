@@ -41,7 +41,7 @@ Patch21:	%{name}-statistics_buffer.patch
 Patch22:	%{name}-tr.patch
 Patch23:	%{name}-Werror.patch
 URL:		http://net-tools.berlios.de/
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 Requires:	hostname
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
