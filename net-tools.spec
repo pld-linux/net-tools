@@ -1,5 +1,6 @@
 # TODO
 # - changing config.in is not sufficent, must patch config.h and config.make manually
+%define	snap	20151002
 Summary:	Basic Networking Tools
 Summary(es.UTF-8):	Herramientas básicas de Red
 Summary(ja.UTF-8):	ネットワークをセットアップするための基本的なツール
@@ -8,39 +9,23 @@ Summary(pt_BR.UTF-8):	Ferramentas básicas de Rede
 Summary(ru.UTF-8):	Базовые сетевые программы
 Summary(uk.UTF-8):	Базові програми мережі
 Name:		net-tools
-Version:	1.60
-Release:	35
+Version:	1.61
+Release:	0.%{snap}.1
 License:	GPL v2+
 Group:		Networking/Admin
-Source0:	http://download.berlios.de/net-tools/%{name}-%{version}.tar.bz2
-# Source0-md5:	888774accab40217dde927e21979c165
+# git clone git://git.code.sf.net/p/net-tools/code net-tools
+Source0:	%{name}-%{snap}.tar.bz2
+# Source0-md5:	000b3d8aaa9ec85054513cd365a3ccca
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	9cee6ac0a07a0bf34fbc71add1eb2ead
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-man.patch
-Patch2:		%{name}-ipvs.patch
-Patch3:		%{name}-et.patch
-Patch4:		%{name}-mii-tool-GigE.patch
-Patch5:		%{name}-x25_address_is_struct.patch
-Patch6:		%{name}-make_config_h.patch
-Patch7:		%{name}-mii.patch
-Patch8:		%{name}-gcc34.patch
-Patch9:		%{name}-nameif.patch
-Patch10:	%{name}-inet6-lookup.patch
-Patch11:	%{name}-ipx.patch
-Patch12:	%{name}-manydevs.patch
-Patch13:	%{name}-get_name.patch
-Patch14:	%{name}-arp_overflow.patch
-Patch15:	%{name}-virtualname.patch
-Patch16:	%{name}-cycle.patch
-Patch17:	%{name}-interface.patch
-Patch18:	%{name}-ifaceopt.patch
-Patch19:	%{name}-netstat-overflow.patch
-Patch20:	%{name}-netstat-netlink-diag.patch
-Patch21:	%{name}-statistics_buffer.patch
-Patch22:	%{name}-tr.patch
-Patch23:	%{name}-Werror.patch
-URL:		http://net-tools.berlios.de/
+Patch2:		%{name}-opt.patch
+Patch3:		%{name}-make_config_h.patch
+Patch4:		%{name}-tr.patch
+Patch5:		%{name}-netstat-netlink-diag.patch
+Patch6:		net-tools-interface.patch
+URL:		https://sourceforge.net/projects/net-tools/
 BuildRequires:	gettext-tools
 Requires:	hostname
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -131,31 +116,36 @@ zależą od hardware portu równoległego, kabla, szybkości CPU każdej
 maszyny połączonej poprzez PLIP.
 
 %prep
-%setup -q
+%setup -q -n %{name}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p2
-%patch5 -p1
+%patch4 -p1
+%patch5 -p0
 %patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
-%patch20 -p0
-%patch21 -p1
-%patch22 -p1
-%patch23 -p1
+
+#%patch3 -p1
+#%patch4 -p2
+#%patch5 -p1
+#%patch6 -p1
+#%patch7 -p1
+#%patch8 -p1
+#%patch9 -p1
+#%patch10 -p1
+#%patch11 -p1
+#%patch12 -p1
+#%patch13 -p1
+#%patch14 -p1
+#%patch15 -p1
+#%patch16 -p1
+#%patch17 -p1
+#%patch18 -p1
+#%patch19 -p1
+#%patch20 -p0
+#%patch21 -p1
+#%patch22 -p1
+#%patch23 -p1
 
 mv po/et_EE.po po/et.po
 
@@ -186,6 +176,10 @@ mv -f $RPM_BUILD_ROOT%{_mandir}/{fr_FR,fr}
 # we can do it safely as no pt/pt_PT man pages appeared here yet
 mv $RPM_BUILD_ROOT%{_mandir}/{pt_BR,pt}
 
+# for compatibility
+ln -s %{_bindir}/ifconfig $RPM_BUILD_ROOT%{_sbindir}/ifconfig
+ln -s %{_bindir}/route $RPM_BUILD_ROOT%{_sbindir}/route
+
 # remove hostname (has its own package)
 %{__rm} $RPM_BUILD_ROOT/bin/dnsdomainname
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man1/dnsdomainname*
@@ -210,15 +204,17 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc README README.ipv6 TODO
+%doc README TODO
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mactab
+%attr(755,root,root) %{_bindir}/ifconfig
 %attr(755,root,root) %{_bindir}/netstat
+%attr(755,root,root) %{_bindir}/route
 %attr(755,root,root) %{_sbindir}/arp
 %attr(755,root,root) %{_sbindir}/ifconfig
 %attr(755,root,root) %{_sbindir}/mii-tool
+%attr(755,root,root) %{_sbindir}/nameif
 %attr(755,root,root) %{_sbindir}/rarp
 %attr(755,root,root) %{_sbindir}/route
-%attr(755,root,root) %{_sbindir}/nameif
 
 %lang(de) %{_mandir}/de/man5/ethers.5*
 %lang(de) %{_mandir}/de/man8/[!ps]*

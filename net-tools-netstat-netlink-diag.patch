@@ -178,7 +178,7 @@ diff -c -d -u -r1.55 netstat.c
 +			    r->idiag_inode);
 +		}
 +	      
-+	      tcp_do_one (++lnr, linebuf);
++	      tcp_do_one (++lnr, linebuf, r->idiag_family == AF_INET ? "tcp" : "tcp6");
 +	    }
 +	  h = NLMSG_NEXT(h, status);
 +	}
@@ -196,7 +196,7 @@ diff -c -d -u -r1.55 netstat.c
  static int tcp_info(void)
  {
 -    INFO_GUTS6(_PATH_PROCNET_TCP, _PATH_PROCNET_TCP6, "AF INET (tcp)",
--	       tcp_do_one);
+-	       tcp_do_one, "tcp", "tcp6");
 +  int rv = -1;
 +  
 +#ifdef HAVE_NETLINK
@@ -207,7 +207,7 @@ diff -c -d -u -r1.55 netstat.c
 +    {
 +      // netlink is not available - so parse /proc/net/tcp
 +      INFO_GUTS6(_PATH_PROCNET_TCP, _PATH_PROCNET_TCP6, "AF INET (tcp)",
-+		 tcp_do_one);   
++		 tcp_do_one, "tcp", "tcp6");   
 +    }
 +  else if (rv == 0) 
 +    return 0;
@@ -216,26 +216,26 @@ diff -c -d -u -r1.55 netstat.c
  }
 + 
  
- static void udp_do_one(int lnr, const char *line)
+ static void udp_do_one(int lnr, const char *line,const char *prot)
  {
 --- config.in~	2009-03-10 04:37:40.000000000 +0200
 +++ config.in	2009-03-10 04:38:14.092903210 +0200
 @@ -89,3 +89,4 @@
- bool 'IP Masquerading support' HAVE_FW_MASQUERADE n
  bool 'Build iptunnel and ipmaddr' HAVE_IP_TOOLS n
  bool 'Build mii-tool' HAVE_MII n
+ bool 'SELinux support' HAVE_SELINUX n
 +bool 'Use Netlink Diag' HAVE_NETLINK y
 --- config.h~	2009-03-10 04:49:18.000000000 +0200
 +++ config.h	2009-03-10 04:49:55.762832175 +0200
 @@ -72,3 +72,4 @@
- #define HAVE_FW_MASQUERADE 1
  #define HAVE_IP_TOOLS 0
  #define HAVE_MII 1
+ #define HAVE_SELINUX 1
 +#define HAVE_NETLINK 1
 --- config.make~	2009-03-10 04:49:18.000000000 +0200
 +++ config.make	2009-03-10 04:50:19.880072014 +0200
 @@ -33,3 +33,4 @@
- # HAVE_FW_MASQUERADE=1
  # HAVE_IP_TOOLS=0
  HAVE_MII=1
+ HAVE_SELINUX=1
 +HAVE_NETLINK=1

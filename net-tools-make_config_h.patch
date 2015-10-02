@@ -1,21 +1,22 @@
---- net-tools-1.60/Makefile.orig	2001-04-15 16:34:31.000000000 +0200
-+++ net-tools-1.60/Makefile	2004-01-05 19:21:08.972317088 +0100
-@@ -159,11 +159,14 @@
- 		@tar -cvz -f ../net-tools-$(RELEASE).tar.gz -C .. net-tools
+--- net-tools/Makefile~	2015-10-02 10:24:26.000000000 +0200
++++ net-tools/Makefile	2015-10-02 10:26:37.964020572 +0200
+@@ -132,11 +132,14 @@ distcheck:	dist
+ 		@printf "\nThe tarball is ready to go:\n%s\n" "`du -b net-tools-$(RELEASE).tar.xz`"
  
- 
--config.h: 	config.in Makefile 
+ config.h: 	config.in Makefile
 -		@echo "Configuring the Linux net-tools (NET-3 Base Utilities)..." ; echo
 -		@if [ config.status -nt config.in ]; \
-+config.h: 	config.in Makefile
-+		@if [ ! -f config.h ]; \
-+		    then echo "Configuring the Linux net-tools (NET-3 Base Utilities)..." ; \
-+		    echo ; \
-+		    if [ config.status -nt config.in ]; \
- 			then ./configure.sh config.status; \
+-			then ./configure.sh config.status; \
 -		   else ./configure.sh config.in; \
+-		 fi
++		@if [ ! -f config.h ]; \
++			then echo "Configuring the Linux net-tools (NET-3 Base Utilities)..." ; \
++			echo ; \
++			if [ config.status -nt config.in ]; \
++				then ./configure.sh config.status; \
 +			else ./configure.sh config.in; \
-+		    fi ; \
- 		 fi
++			fi ; \
++		fi
  
  
+ version.h:	Makefile

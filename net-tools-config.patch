@@ -1,7 +1,7 @@
 diff -Nru net-tools-1.56/config.h net-tools-1.56.new/config.h
 --- net-tools-1.56/config.h	Thu Jan  1 01:00:00 1970
 +++ net-tools-1.56.new/config.h	Tue May 30 03:19:19 2000
-@@ -0,0 +1,74 @@
+@@ -0,0 +1,75 @@
 +/*
 +* config.h	Automatically generated configuration includefile
 +*
@@ -76,10 +76,11 @@ diff -Nru net-tools-1.56/config.h net-tools-1.56.new/config.h
 +#define HAVE_FW_MASQUERADE 1
 +#define HAVE_IP_TOOLS 0
 +#define HAVE_MII 1
++#define HAVE_SELINUX 1
 diff -Nru net-tools-1.56/config.make net-tools-1.56.new/config.make
 --- net-tools-1.56/config.make	Thu Jan  1 01:00:00 1970
 +++ net-tools-1.56.new/config.make	Tue May 30 03:19:19 2000
-@@ -0,0 +1,35 @@
+@@ -0,0 +1,36 @@
 +I18N=1
 +HAVE_AFUNIX=1
 +HAVE_AFINET=1
@@ -115,10 +116,11 @@ diff -Nru net-tools-1.56/config.make net-tools-1.56.new/config.make
 +# HAVE_FW_MASQUERADE=1
 +# HAVE_IP_TOOLS=0
 +HAVE_MII=1
++HAVE_SELINUX=1
 diff -Nru net-tools-1.56/config.status net-tools-1.56.new/config.status
 --- net-tools-1.56/config.status	Thu Jan  1 01:00:00 1970
 +++ net-tools-1.56.new/config.status	Tue May 30 03:19:19 2000
-@@ -0,0 +1,91 @@
+@@ -0,0 +1,92 @@
 +#
 +# config.in	Configure.sh source for the net-tools.
 +#		This file contains the definition of what the support
@@ -210,3 +212,4 @@ diff -Nru net-tools-1.56/config.status net-tools-1.56.new/config.status
 +bool 'IP Masquerading support' HAVE_FW_MASQUERADE y
 +bool 'Build iptunnel and ipmaddr' HAVE_IP_TOOLS n
 +bool 'Build mii-tool' HAVE_MII y
++bool 'SELinux support' HAVE_SELINUX y

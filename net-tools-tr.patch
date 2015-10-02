@@ -11,14 +11,13 @@
  #include <errno.h>
 --- net-tools-1.60/lib/tr.c~	2013-02-16 22:39:03.864803754 +0100
 +++ net-tools-1.60/lib/tr.c	2013-02-16 22:40:02.122803924 +0100
-@@ -31,6 +31,10 @@
- #include "pathnames.h"
+@@ -32,6 +32,9 @@
  #include "intl.h"
+ #include "util.h"
  
 +#ifndef TR_ALEN
 +#define TR_ALEN FDDI_K_ALEN
 +#endif
-+
- extern struct hwtype tr_hwtype;
  
- static char *pr_tr(unsigned char *ptr)
+ /* actual definition at the end of file */
+ extern struct hwtype tr_hwtype;
