@@ -56,18 +56,19 @@ diff -up net-tools-2.0/netstat.c.interface net-tools-2.0/netstat.c
  	perror(_("missing interface information"));
  	exit(1);
      }
-@@ -1825,9 +1826,10 @@ static void usage(void)
- {
-     fprintf(stderr, _("usage: netstat [-vWeenNcCF] [<Af>] -r         netstat {-V|--version|-h|--help}\n"));
-     fprintf(stderr, _("       netstat [-vWnNcaeol] [<Socket> ...]\n"));
--    fprintf(stderr, _("       netstat { [-vWeenNac] -i | [-cnNe] -M | -s [-6tuw] }\n\n"));
-+    fprintf(stderr, _("       netstat { [-vWeenNac] -I[<Iface>] | -i | [-cnNe] -M | -s [-6tuw] }\n\n"));
+@@ -1825,10 +1825,11 @@ static void usage(int rc)
+     FILE *fp = rc ? stderr : stdout;
+     fprintf(fp, _("usage: netstat [-vWeenNcCF] [<Af>] -r         netstat {-V|--version|-h|--help}\n"));
+     fprintf(fp, _("       netstat [-vWnNcaeol] [<Socket> ...]\n"));
+-    fprintf(fp, _("       netstat { [-vWeenNac] -i | [-cnNe] -M | -s [-6tuw] }\n\n"));
++    fprintf(fp, _("       netstat { [-vWeenNac] -I[<Iface>] | -i | [-cnNe] -M | -s [-6tuw] }\n\n"));
  
-     fprintf(stderr, _("        -r, --route              display routing table\n"));
-+    fprintf(stderr, _("        -I, --interfaces=<Iface> display interface table for <Iface>\n"));
-     fprintf(stderr, _("        -i, --interfaces         display interface table\n"));
-     fprintf(stderr, _("        -g, --groups             display multicast group memberships\n"));
-     fprintf(stderr, _("        -s, --statistics         display networking statistics (like SNMP)\n"));
+     fprintf(fp, _("        -r, --route              display routing table\n"));
+     fprintf(fp, _("        -i, --interfaces         display interface table\n"));
++    fprintf(fp, _("        -I, --interfaces=<Iface> display interface table for <Iface>\n"));
+     fprintf(fp, _("        -g, --groups             display multicast group memberships\n"));
+     fprintf(fp, _("        -s, --statistics         display networking statistics (like SNMP)\n"));
+ #if HAVE_FW_MASQUERADE
 @@ -1875,7 +1882,7 @@ int main
      {
  	AFTRANS_OPTS,

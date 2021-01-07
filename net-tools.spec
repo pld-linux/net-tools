@@ -1,6 +1,5 @@
 # TODO
 # - changing config.in is not sufficent, must patch config.h and config.make manually
-%define	snap	20151002
 Summary:	Basic Networking Tools
 Summary(es.UTF-8):	Herramientas básicas de Red
 Summary(ja.UTF-8):	ネットワークをセットアップするための基本的なツール
@@ -9,13 +8,12 @@ Summary(pt_BR.UTF-8):	Ferramentas básicas de Rede
 Summary(ru.UTF-8):	Базовые сетевые программы
 Summary(uk.UTF-8):	Базові програми мережі
 Name:		net-tools
-Version:	1.61
-Release:	0.%{snap}.1
+Version:	2.10
+Release:	1
 License:	GPL v2+
 Group:		Networking/Admin
-# git clone git://git.code.sf.net/p/net-tools/code net-tools
-Source0:	%{name}-%{snap}.tar.bz2
-# Source0-md5:	000b3d8aaa9ec85054513cd365a3ccca
+Source0:	https://sourceforge.net/projects/net-tools/files/%{name}-%{version}.tar.xz
+# Source0-md5:	78aae762c95e2d731faf88d482e4cde5
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	9cee6ac0a07a0bf34fbc71add1eb2ead
 Patch0:		%{name}-config.patch
@@ -116,7 +114,7 @@ zależą od hardware portu równoległego, kabla, szybkości CPU każdej
 maszyny połączonej poprzez PLIP.
 
 %prep
-%setup -q -n %{name}
+%setup -q
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -124,8 +122,6 @@ maszyny połączonej poprzez PLIP.
 %patch4 -p1
 %patch5 -p0
 %patch6 -p1
-
-mv po/et_EE.po po/et.po
 
 %build
 %{__make} -j1 \
@@ -147,7 +143,6 @@ bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/README.net-tools-non-english-man-pages
 
 # standardize localized man dirs
-mv -f $RPM_BUILD_ROOT%{_mandir}/{de_DE/man1/*,de/man1}
 rmdir $RPM_BUILD_ROOT%{_mandir}/de_DE/man1
 mv -f $RPM_BUILD_ROOT%{_mandir}/{de_DE/*,de}
 mv -f $RPM_BUILD_ROOT%{_mandir}/{fr_FR,fr}
@@ -159,16 +154,11 @@ ln -s %{_bindir}/ifconfig $RPM_BUILD_ROOT%{_sbindir}/ifconfig
 ln -s %{_bindir}/route $RPM_BUILD_ROOT%{_sbindir}/route
 
 # remove hostname (has its own package)
-%{__rm} $RPM_BUILD_ROOT/bin/dnsdomainname
-%{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man1/dnsdomainname*
-%{__rm} $RPM_BUILD_ROOT/bin/domainname
-%{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man1/domainname*
-%{__rm} $RPM_BUILD_ROOT/bin/hostname
-%{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man1/hostname*
-%{__rm} $RPM_BUILD_ROOT/bin/nisdomainname
-%{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man1/nisdomainname*
-%{__rm} $RPM_BUILD_ROOT/bin/ypdomainname
-%{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man1/ypdomainname*
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/*/man1/dnsdomainname*
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/*/man1/domainname*
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/*/man1/hostname*
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/*/man1/nisdomainname*
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/*/man1/ypdomainname*
 
 cat > $RPM_BUILD_ROOT%{_sysconfdir}/mactab <<EOF
 # Each line here contains an interface name and a Ethernet MAC address. Like:

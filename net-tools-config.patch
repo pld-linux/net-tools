@@ -80,7 +80,7 @@ diff -Nru net-tools-1.56/config.h net-tools-1.56.new/config.h
 diff -Nru net-tools-1.56/config.make net-tools-1.56.new/config.make
 --- net-tools-1.56/config.make	Thu Jan  1 01:00:00 1970
 +++ net-tools-1.56.new/config.make	Tue May 30 03:19:19 2000
-@@ -0,0 +1,36 @@
+@@ -0,0 +1,38 @@
 +I18N=1
 +HAVE_AFUNIX=1
 +HAVE_AFINET=1
@@ -94,12 +94,14 @@ diff -Nru net-tools-1.56/config.make net-tools-1.56.new/config.make
 +# HAVE_AFECONET=0
 +# HAVE_AFDECnet=0
 +# HAVE_AFASH=0
++HAVE_ARP_TOOLS=1
 +HAVE_HWETHER=1
 +HAVE_HWARC=1
 +HAVE_HWSLIP=1
 +HAVE_HWPPP=1
 +HAVE_HWTUNNEL=1
-+
++HAVE_SERIAL_TOOLS=1
++HAVE_PLIP_TOOLS=1
 +HAVE_HWTR=1
 +HAVE_HWAX25=1
 +# HAVE_HWROSE=0
