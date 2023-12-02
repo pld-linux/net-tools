@@ -1,8 +1,8 @@
-diff -up net-tools-2.0/man/en_US/netstat.8.interface net-tools-2.0/man/en_US/netstat.8
---- net-tools-2.0/man/en_US/netstat.8.interface	2014-11-24 14:52:45.648623478 +0100
-+++ net-tools-2.0/man/en_US/netstat.8	2014-11-24 14:53:32.294972184 +0100
-@@ -49,9 +49,9 @@ netstat \- Print network connections, ro
- .RB [delay]
+diff -urNp -x '*.orig' net-tools-2.10.org/man/en_US/netstat.8 net-tools-2.10/man/en_US/netstat.8
+--- net-tools-2.10.org/man/en_US/netstat.8	2021-01-07 00:22:35.000000000 +0100
++++ net-tools-2.10/man/en_US/netstat.8	2023-12-02 23:35:08.827986462 +0100
+@@ -47,9 +47,9 @@ netstat \- Print network connections, ro
+ .RB [ \-\-continuous | \-c ]
  .P
  .B netstat
 -.RB { \-\-interfaces | \-i }
@@ -13,7 +13,7 @@ diff -up net-tools-2.0/man/en_US/netstat.8.interface net-tools-2.0/man/en_US/net
  .RB [ \-\-verbose | \-v ]
  .RB [ \-\-program | \-p ]
  .RB [ \-\-numeric | \-n ]
-@@ -134,8 +134,8 @@ and
+@@ -128,8 +128,8 @@ and
  produce the same output.
  .SS "\-\-groups, \-g"
  Display multicast group membership information for IPv4 and IPv6.
@@ -24,10 +24,10 @@ diff -up net-tools-2.0/man/en_US/netstat.8.interface net-tools-2.0/man/en_US/net
  .SS "\-\-masquerade, \-M"
  Display a list of masqueraded connections.
  .SS "\-\-statistics, \-s"
-diff -up net-tools-2.0/netstat.c.interface net-tools-2.0/netstat.c
---- net-tools-2.0/netstat.c.interface	2014-11-24 14:52:45.644623534 +0100
-+++ net-tools-2.0/netstat.c	2014-11-24 14:52:45.652623422 +0100
-@@ -144,6 +144,7 @@ static char *Release = RELEASE, *Signatu
+diff -urNp -x '*.orig' net-tools-2.10.org/netstat.c net-tools-2.10/netstat.c
+--- net-tools-2.10.org/netstat.c	2023-12-02 23:35:08.762985691 +0100
++++ net-tools-2.10/netstat.c	2023-12-02 23:35:08.827986462 +0100
+@@ -149,6 +149,7 @@ static char *Release = RELEASE, *Signatu
  #define E_IOCTL -3
  
  int flag_int = 0;
@@ -35,7 +35,7 @@ diff -up net-tools-2.0/netstat.c.interface net-tools-2.0/netstat.c
  int flag_rou = 0;
  int flag_mas = 0;
  int flag_sta = 0;
-@@ -2083,6 +2083,7 @@ static int rfcomm_info(void)
+@@ -2132,6 +2133,7 @@ static int rfcomm_info(void)
  
  static int iface_info(void)
  {
@@ -43,8 +43,8 @@ diff -up net-tools-2.0/netstat.c.interface net-tools-2.0/netstat.c
      if (skfd < 0) {
  	if ((skfd = sockets_open(0)) < 0) {
  	    perror("socket");
-@@ -1802,7 +1804,11 @@ static int iface_info(void)
- 	    printf(_("Iface      MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg\n"));
+@@ -2144,7 +2146,11 @@ static int iface_info(void)
+ 	printf(_("Iface             MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg\n"));
      }
  
 -    if (for_all_interfaces(do_if_print, &flag_all) < 0) {
@@ -56,7 +56,7 @@ diff -up net-tools-2.0/netstat.c.interface net-tools-2.0/netstat.c
  	perror(_("missing interface information"));
  	exit(1);
      }
-@@ -1825,10 +1825,11 @@ static void usage(int rc)
+@@ -2171,10 +2177,11 @@ static void usage(int rc)
      FILE *fp = rc ? stderr : stdout;
      fprintf(fp, _("usage: netstat [-vWeenNcCF] [<Af>] -r         netstat {-V|--version|-h|--help}\n"));
      fprintf(fp, _("       netstat [-vWnNcaeol] [<Socket> ...]\n"));
@@ -69,7 +69,7 @@ diff -up net-tools-2.0/netstat.c.interface net-tools-2.0/netstat.c
      fprintf(fp, _("        -g, --groups             display multicast group memberships\n"));
      fprintf(fp, _("        -s, --statistics         display networking statistics (like SNMP)\n"));
  #if HAVE_FW_MASQUERADE
-@@ -1875,7 +1882,7 @@ int main
+@@ -2217,7 +2224,7 @@ int main
      {
  	AFTRANS_OPTS,
  	{"version", 0, 0, 'V'},
@@ -78,7 +78,7 @@ diff -up net-tools-2.0/netstat.c.interface net-tools-2.0/netstat.c
  	{"help", 0, 0, 'h'},
  	{"route", 0, 0, 'r'},
  #if HAVE_FW_MASQUERADE
-@@ -1919,7 +1926,7 @@ int main
+@@ -2261,7 +2268,7 @@ int main
      getroute_init();		/* Set up AF routing support */
  
      afname[0] = '\0';
@@ -87,7 +87,7 @@ diff -up net-tools-2.0/netstat.c.interface net-tools-2.0/netstat.c
  	switch (i) {
  	case -1:
  	    break;
-@@ -1960,6 +1967,13 @@ int main
+@@ -2302,6 +2309,13 @@ int main
  	case 'p':
  	    flag_prg++;
  	    break;

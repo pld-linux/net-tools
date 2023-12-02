@@ -4,12 +4,36 @@ Index: netstat.c
 ===================================================================
 RCS file: /cvsroot/net-tools/net-tools/netstat.c,v
 retrieving revision 1.55
-diff -c -d -u -r1.55 netstat.c
---- netstat.c	1 Dec 2007 19:00:40 -0000	1.55
-+++ netstat.c	20 Feb 2008 23:04:29 -0000
-@@ -96,6 +96,13 @@
- #include "util.h"
- #include "proc.h"
+diff -urNp -x '*.orig' net-tools-2.10.org/config.h net-tools-2.10/config.h
+--- net-tools-2.10.org/config.h	2023-12-02 23:34:04.104218822 +0100
++++ net-tools-2.10/config.h	2023-12-02 23:34:04.168219581 +0100
+@@ -73,3 +73,4 @@
+ #define HAVE_IP_TOOLS 0
+ #define HAVE_MII 1
+ #define HAVE_SELINUX 1
++#define HAVE_NETLINK 1
+diff -urNp -x '*.orig' net-tools-2.10.org/config.in net-tools-2.10/config.in
+--- net-tools-2.10.org/config.in	2021-01-07 00:22:35.000000000 +0100
++++ net-tools-2.10/config.in	2023-12-02 23:34:04.168219581 +0100
+@@ -98,3 +98,4 @@ bool 'Build mii-tool' HAVE_MII y
+ bool 'Build plipconfig' HAVE_PLIP_TOOLS y
+ bool 'Build slattach' HAVE_SERIAL_TOOLS y
+ bool 'SELinux support' HAVE_SELINUX n
++bool 'Use Netlink Diag' HAVE_NETLINK y
+diff -urNp -x '*.orig' net-tools-2.10.org/config.make net-tools-2.10/config.make
+--- net-tools-2.10.org/config.make	2023-12-02 23:34:04.104218822 +0100
++++ net-tools-2.10/config.make	2023-12-02 23:34:04.168219581 +0100
+@@ -36,3 +36,4 @@ HAVE_HWIRDA=1
+ # HAVE_IP_TOOLS=0
+ HAVE_MII=1
+ HAVE_SELINUX=1
++HAVE_NETLINK=1
+diff -urNp -x '*.orig' net-tools-2.10.org/netstat.c net-tools-2.10/netstat.c
+--- net-tools-2.10.org/netstat.c	2021-01-07 00:22:35.000000000 +0100
++++ net-tools-2.10/netstat.c	2023-12-02 23:34:04.168219581 +0100
+@@ -107,6 +107,13 @@
+ #include <bluetooth/bluetooth.h>
+ #endif
  
 +#ifdef HAVE_NETLINK
 +#include <asm/types.h>
@@ -19,10 +43,10 @@ diff -c -d -u -r1.55 netstat.c
 +
 +
  #define PROGNAME_WIDTH 20
+ #define SELINUX_WIDTH 50
  
- #if !defined(s6_addr32) && defined(in6a_words)
-@@ -828,11 +835,194 @@
-     }
+@@ -1216,11 +1223,194 @@ static void tcp_do_one(int lnr, const ch
+ 	finish_this_one(uid,inode,timers);
  }
  
 +
@@ -216,26 +240,5 @@ diff -c -d -u -r1.55 netstat.c
  }
 + 
  
- static void udp_do_one(int lnr, const char *line,const char *prot)
+ static int notnull(const struct sockaddr_storage *sas)
  {
---- config.in~	2009-03-10 04:37:40.000000000 +0200
-+++ config.in	2009-03-10 04:38:14.092903210 +0200
-@@ -89,3 +89,4 @@
- bool 'Build iptunnel and ipmaddr' HAVE_IP_TOOLS n
- bool 'Build mii-tool' HAVE_MII n
- bool 'SELinux support' HAVE_SELINUX n
-+bool 'Use Netlink Diag' HAVE_NETLINK y
---- config.h~	2009-03-10 04:49:18.000000000 +0200
-+++ config.h	2009-03-10 04:49:55.762832175 +0200
-@@ -72,3 +72,4 @@
- #define HAVE_IP_TOOLS 0
- #define HAVE_MII 1
- #define HAVE_SELINUX 1
-+#define HAVE_NETLINK 1
---- config.make~	2009-03-10 04:49:18.000000000 +0200
-+++ config.make	2009-03-10 04:50:19.880072014 +0200
-@@ -33,3 +33,4 @@
- # HAVE_IP_TOOLS=0
- HAVE_MII=1
- HAVE_SELINUX=1
-+HAVE_NETLINK=1

@@ -9,7 +9,7 @@ Summary(ru.UTF-8):	Базовые сетевые программы
 Summary(uk.UTF-8):	Базові програми мережі
 Name:		net-tools
 Version:	2.10
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	https://sourceforge.net/projects/net-tools/files/%{name}-%{version}.tar.xz
@@ -120,7 +120,7 @@ maszyny połączonej poprzez PLIP.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p0
+%patch5 -p1
 %patch6 -p1
 
 %build
