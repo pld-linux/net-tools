@@ -9,7 +9,7 @@ Summary(ru.UTF-8):	Базовые сетевые программы
 Summary(uk.UTF-8):	Базові програми мережі
 Name:		net-tools
 Version:	2.10
-Release:	2
+Release:	3
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	https://sourceforge.net/projects/net-tools/files/%{name}-%{version}.tar.xz
@@ -23,6 +23,10 @@ Patch3:		%{name}-make_config_h.patch
 Patch4:		%{name}-tr.patch
 Patch5:		%{name}-netstat-netlink-diag.patch
 Patch6:		net-tools-interface.patch
+Patch7:		%{name}-CVE-2025-46836.patch
+Patch8:		%{name}-proc_gen_fmt-overflow.patch
+Patch9:		%{name}-ax25-netrom-overflow.patch
+Patch10:	%{name}-netrom-sprint-dangling.patch
 URL:		https://sourceforge.net/projects/net-tools/
 BuildRequires:	gettext-tools
 Requires:	hostname
@@ -122,6 +126,10 @@ maszyny połączonej poprzez PLIP.
 %patch -P4 -p1
 %patch -P5 -p1
 %patch -P6 -p1
+%patch -P7 -p1
+%patch -P8 -p1
+%patch -P9 -p1
+%patch -P10 -p1
 
 %build
 %{__make} -j1 \

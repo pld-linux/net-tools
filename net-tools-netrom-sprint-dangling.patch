@@ -1,0 +1,16 @@
+NETROM_sprint() returns a pointer to a dead stack buffer for an unset address
+https://github.com/ecki/net-tools/commit/45bf9973f01557ecfd7dfd65c265fe99ecda6cac
+
+diff --git a/lib/netrom.c b/lib/netrom.c
+index 309e7cb..d973762 100644
+--- a/lib/netrom.c
++++ b/lib/netrom.c
+@@ -81,7 +81,7 @@ static const char *NETROM_sprint(const struct sockaddr_storage *sasp, int numeri
+ {
+     const struct sockaddr_ax25 *ax25_sap = (const struct sockaddr_ax25 *)sasp;
+     const struct sockaddr *sap = (const struct sockaddr *)sasp;
+-    char buf[64];
++    static char buf[64];
+     if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
+ 	return safe_strncpy(buf, _("[NONE SET]"), sizeof(buf));
+     return NETROM_print(ax25_sap->sax25_call.ax25_call);
